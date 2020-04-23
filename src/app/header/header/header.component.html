@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a href="#" class="navbar-brand ml-4">QnA</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" *ngFor="let item of menu">
+      <a class="nav-link" href="#">{{ item }}</a>
+    </li>
+  </ul>
+
+  <form class="form-inline">
+    <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-light my-2" type="submit">Search</button>
+  </form>
+</nav>
