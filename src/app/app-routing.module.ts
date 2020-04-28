@@ -10,6 +10,11 @@ const routes: Routes = [
       import('./auth/auth.module').then((mod) => mod.AuthModule),
     canActivateChild: [AuthGuard],
   },
+  {
+    path: 'questions',
+    loadChildren: () =>
+      import('./questions/questions.module').then((mod) => mod.QuestionsModule),
+  },
 ];
 
 @NgModule({

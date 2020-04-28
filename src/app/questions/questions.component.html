@@ -1,0 +1,10 @@
+<div class="spinner align-middle justify-content-center align-items-end" *ngIf="loading">
+  <div class="lds-dual-ring"></div>
+</div>
+<div class="alert alert-danger mt-2" role="alert" *ngIf="errorMes">
+  {{ errorMes }}
+</div>
+<app-question 
+  *ngFor="let question of questions"
+  [question]="question">
+</app-question>

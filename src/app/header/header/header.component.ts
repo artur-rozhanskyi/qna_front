@@ -11,7 +11,7 @@ import * as AuthActions from '../../auth/store/auth.actions';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  menu = [];
+  menu = [{ link: 'questions', name: 'questions' }];
   isAuthenticated: boolean;
   isLoading: boolean;
 
