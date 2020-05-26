@@ -1,0 +1,52 @@
+<div class="container h-75">
+  <div class="row h-100 justify-content-center align-items-center text-center">
+    <form class="col-md-6 col-sm-9 mx-auto" (ngSubmit)="onSubmit()">
+      <h2>Login</h2>
+      <div
+        class="alert alert-danger text-left"
+        role="alert"
+        *ngIf="errorMessage"
+      >
+        {{ errorMessage }}
+      </div>
+      <div class="form-group" [formGroup]="authForm">
+        <small
+          class="form-text text-danger"
+          *ngIf="email.touched && email.invalid"
+        >
+          Please, provide the correct email
+        </small>
+        <small
+          id="emailHelp"
+          class="form-text text-danger"
+          *ngIf="password.touched && password.invalid"
+        >
+          Please, provide the correct password
+        </small>
+        <input
+          type="email"
+          class="form-control mt-2"
+          [class.is-invalid]="email.touched && email.invalid"
+          placeholder="Enter email"
+          formControlName="email"
+        />
+        <input
+          type="password"
+          class="form-control mt-2"
+          [class.is-invalid]="password.touched && password.invalid"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">
+        Submit
+        <span
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+          *ngIf="isLoading"
+        ></span>
+      </button>
+    </form>
+  </div>
+</div>
