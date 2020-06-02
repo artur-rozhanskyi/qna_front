@@ -58,7 +58,9 @@ export class SignUpComponent implements OnInit {
 
   onSubmit() {
     if (this.signUpForm.valid) {
-      this.store.dispatch(AuthActions.signUpStart(this.signUpForm.value));
+      this.store.dispatch(
+        AuthActions.signUpStart({ auth: this.signUpForm.value })
+      );
     } else {
       this.signUpForm.markAllAsTouched();
     }

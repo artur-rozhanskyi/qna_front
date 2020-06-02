@@ -4,13 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { AuthParams } from '../shared/auth.interface';
 import { User } from '../shared/user.model';
 import { environment } from 'src/environments/environment';
+import { Token } from '../shared/token.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = environment.apiUrl;
 
   getToken(authParams: AuthParams) {
-    return this.http.post<any>(`${this.apiUrl}/oauth/token.json`, {
+    return this.http.post<Token>(`${this.apiUrl}/oauth/token.json`, {
       ...authParams,
       grant_type: 'password',
     });

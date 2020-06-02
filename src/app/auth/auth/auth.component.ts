@@ -46,7 +46,9 @@ export class AuthComponent implements OnInit {
 
   onSubmit() {
     if (this.authForm.valid) {
-      this.store.dispatch(AuthActions.loginStart(this.authForm.value));
+      this.store.dispatch(
+        AuthActions.loginStart({ auth: this.authForm.value })
+      );
     } else {
       this.authForm.markAllAsTouched();
     }

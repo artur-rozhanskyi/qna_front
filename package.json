@@ -23,6 +23,7 @@
     "@ngrx/store": "^9.1.0",
     "bootstrap": "^4.4.1",
     "rxjs": "~6.5.4",
+    "snakecase-keys": "^3.2.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
@@ -34,7 +35,6 @@
     "@ngrx/store-devtools": "^9.1.0",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
