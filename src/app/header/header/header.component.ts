@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 import * as fromApp from '../../store/app.reducers';
-import { Router } from '@angular/router';
 import * as AuthActions from '../../auth/store/auth.actions';
 
 @Component({
@@ -12,8 +12,8 @@ import * as AuthActions from '../../auth/store/auth.actions';
 })
 export class HeaderComponent implements OnInit {
   menu = [];
-  isAuthenticated = false;
-  isLoading = false;
+  isAuthenticated: boolean;
+  isLoading: boolean;
 
   constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 

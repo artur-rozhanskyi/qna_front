@@ -37,7 +37,6 @@ export class AuthComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(AuthActions.authCleare());
     this.store.pipe(select('auth')).subscribe((authState) => {
       this.isLoading = authState.loading;
       this.errorMessage = authState.error;
@@ -45,12 +44,10 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.authForm.valid) {
-      this.store.dispatch(
-        AuthActions.loginStart({ auth: this.authForm.value })
-      );
-    } else {
-      this.authForm.markAllAsTouched();
-    }
+    this.authForm.valid
+      ? this.store.dispatch(
+          AuthActions.loginStart({ auth: this.authForm.value })
+        )
+      : this.authForm.markAllAsTouched();
   }
 }

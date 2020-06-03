@@ -14,7 +14,7 @@ export const AUTH_SUCCESS = '[Auth] Auth Success';
 export const AUTH_FAIL = '[Auth] Auth Fail';
 export const LOGIN_FAIL = '[Auth] Login Fail';
 export const SIGN_UP_FAIL = '[Auth] Sign Up Fail';
-export const AUTH_CLEARE = '[Auth] Auth Clear';
+export const AUTH_CLEAR = '[Auth] Auth Clear';
 export const AUTO_LOGIN = '[Auth] Auto Login';
 
 export const loginStart = createAction(
@@ -32,4 +32,4 @@ export const signUpStart = createAction(
   props<{ auth: AuthParams }>()
 );
 export const autoLogin = createAction(AUTO_LOGIN);
-export const authCleare = createAction(AUTH_CLEARE);
+export const authClear = createAction(AUTH_CLEAR);

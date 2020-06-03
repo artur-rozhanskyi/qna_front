@@ -11,7 +11,7 @@ export interface State {
 }
 
 const initialState: State = {
-  authenticated: false,
+  authenticated: null,
   error: null,
   loading: false,
   user: null,
@@ -24,6 +24,10 @@ const authReducer$ = createReducer(
     loading: true,
     authenticated: false,
     error: null,
+  })),
+  on(AuthActions.autoLogin, (state) => ({
+    ...state,
+    loading: true,
   })),
   on(AuthActions.signUpStart, (state) => ({
     ...state,
@@ -51,7 +55,7 @@ const authReducer$ = createReducer(
     authenticated: false,
     user: null,
   })),
-  on(AuthActions.authCleare, (state) => ({
+  on(AuthActions.authClear, (state) => ({
     ...state,
     authenticated: false,
     user: null,

@@ -49,7 +49,6 @@ export class SignUpComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(AuthActions.authCleare());
     this.store.pipe(select('auth')).subscribe((authState) => {
       this.errorMessage = authState.error;
       this.isLoading = authState.loading;
