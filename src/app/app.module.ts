@@ -15,7 +15,6 @@ import { ApiInterceptor } from './shared/api.interceptor';
 import { AuthEffects } from './auth/store/auth.effects';
 import { SnakeCaseInterceptor } from './shared/snake-case.interceptor';
 import { TokenInterceptor } from './shared/token.interceptor';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const token = localStorage.getItem(environment.tokenName);
     token
-      ? this.store.dispatch(AuthActions.autoLogin())
+      ? this.store.dispatch(AuthActions.getUser())
       : this.store.dispatch(AuthActions.authClear());
   }
   constructor(private store: Store<fromApp.AppState>) {}

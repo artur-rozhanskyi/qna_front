@@ -7,6 +7,8 @@ export interface State {
   authenticated: boolean;
   error: string;
   loading: boolean;
+  forgotPassword: boolean;
+  resetPassword: boolean;
   user: User;
 }
 
@@ -14,26 +16,24 @@ const initialState: State = {
   authenticated: null,
   error: null,
   loading: false,
+  forgotPassword: false,
+  resetPassword: false,
   user: null,
 };
 
 const authReducer$ = createReducer(
   initialState,
-  on(AuthActions.loginStart, (state) => ({
+  on(AuthActions.authClear, (state) => ({
     ...state,
-    loading: true,
     authenticated: false,
+    user: null,
+    loading: false,
     error: null,
   })),
-  on(AuthActions.autoLogin, (state) => ({
+  on(AuthActions.authFail, (state, payload) => ({
     ...state,
-    loading: true,
-  })),
-  on(AuthActions.signUpStart, (state) => ({
-    ...state,
-    loading: true,
-    authenticated: false,
-    error: null,
+    loading: false,
+    error: payload.error,
   })),
   on(AuthActions.authSuccess, (state) => ({
     ...state,
@@ -41,25 +41,57 @@ const authReducer$ = createReducer(
     loading: false,
     error: null,
   })),
+  on(AuthActions.errorClear, (state) => ({
+    ...state,
+    error: null,
+  })),
+  on(AuthActions.forgotPassword, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(AuthActions.forgotPasswordFalse, (state) => ({
+    ...state,
+    forgotPassword: false,
+    loading: false,
+  })),
+  on(AuthActions.forgotPasswordSuccess, (state) => ({
+    ...state,
+    forgotPassword: true,
+    loading: false,
+  })),
+  on(AuthActions.getUser, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(AuthActions.loginStart, (state) => ({
+    ...state,
+    loading: true,
+    authenticated: false,
+    error: null,
+  })),
+  on(AuthActions.logout, (state) => ({
+    ...state,
+    authenticated: false,
+    user: null,
+    loading: false,
+    error: null,
+  })),
+  on(AuthActions.resetPasswordFail, (state) => ({
+    ...state,
+    resetPassword: false,
+  })),
+  on(AuthActions.resetPasswordSuccess, (state) => ({
+    ...state,
+    resetPassword: true,
+  })),
   on(AuthActions.setUser, (state, payload) => ({
     ...state,
     user: payload.user,
   })),
-  on(AuthActions.authFail, (state, payload) => ({
+  on(AuthActions.signUpStart, (state) => ({
     ...state,
-    loading: false,
-    error: payload.error,
-  })),
-  on(AuthActions.logoutSuccess, (state) => ({
-    ...state,
+    loading: true,
     authenticated: false,
-    user: null,
-  })),
-  on(AuthActions.authClear, (state) => ({
-    ...state,
-    authenticated: false,
-    user: null,
-    loading: false,
     error: null,
   }))
 );

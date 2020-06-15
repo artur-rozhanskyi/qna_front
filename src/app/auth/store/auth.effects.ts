@@ -3,11 +3,19 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { exhaustMap, catchError, tap, switchMap } from 'rxjs/operators';
+import {
+  exhaustMap,
+  catchError,
+  tap,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
 import * as AuthActions from '../store/auth.actions';
+import * as fromApp from '../../store/app.reducers';
 import { environment } from '../../../environments/environment';
+import { Store, select } from '@ngrx/store';
 
 @Injectable()
 export class AuthEffects {
@@ -16,9 +24,16 @@ export class AuthEffects {
       ofType(AuthActions.loginStart),
       exhaustMap((loginAction) =>
         this.authService.getToken(loginAction.auth).pipe(
-          switchMap((token) =>
-            of(AuthActions.authSuccess(), AuthActions.setToken({ token }))
-          ),
+          withLatestFrom(this.store.pipe(select('auth'))),
+          switchMap(([token, authState]) => {
+            if (authState.user) {
+              return of(
+                AuthActions.setToken({ token }),
+                AuthActions.authSuccess()
+              );
+            }
+            return of(AuthActions.setToken({ token }), AuthActions.getUser());
+          }),
           tap(() => this.router.navigate(['/'])),
           catchError(this.handleError)
         )
@@ -43,29 +58,27 @@ export class AuthEffects {
     )
   );
 
-  autoLogin$ = createEffect(() =>
+  getUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.autoLogin),
+      ofType(AuthActions.getUser),
       switchMap(() =>
-        this.authService
-          .getUser()
-          .pipe(
-            switchMap((user) =>
-              of(AuthActions.authSuccess(), AuthActions.setUser({ user }))
-            )
-          )
+        this.authService.getUser().pipe(
+          switchMap((user) =>
+            of(AuthActions.setUser({ user }), AuthActions.authSuccess())
+          ),
+          catchError(this.handleError)
+        )
       )
     )
   );
 
-  logoutStart$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.logoutStart),
-      exhaustMap(() => {
-        localStorage.removeItem(this.tokenName);
-        return of(AuthActions.authClear());
-      })
-    )
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.logout),
+        tap(() => localStorage.removeItem(environment.tokenName))
+      ),
+    { dispatch: false }
   );
 
   setToken$ = createEffect(
@@ -73,9 +86,12 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.setToken),
         tap((tokenAction) => {
-          localStorage.setItem(this.tokenName, tokenAction.token.access_token);
+          localStorage.setItem(
+            environment.tokenName,
+            tokenAction.token.access_token
+          );
           setInterval(
-            () => localStorage.removeItem(this.tokenName),
+            () => localStorage.removeItem(environment.tokenName),
             tokenAction.token.expires_in * 1000
           );
         })
@@ -83,34 +99,74 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  forgotPassword$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.forgotPassword),
+      exhaustMap((forgotAction) =>
+        this.authService.forgotPassword(forgotAction.forgotParams).pipe(
+          switchMap(() => of(AuthActions.forgotPasswordSuccess())),
+          catchError(this.handleError)
+        )
+      )
+    )
+  );
+
+  resetPasswordStart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.resetPassword),
+      exhaustMap((resetPasswordAction) =>
+        this.authService.resetPassword(resetPasswordAction.resetParams).pipe(
+          switchMap(() => of(AuthActions.resetPasswordSuccess())),
+          catchError(this.handleError)
+        )
+      )
+    )
+  );
+
+  resetPasswordSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.resetPasswordSuccess),
+        tap(() => {
+          localStorage.removeItem(environment.resetPasswordToken);
+        })
+      ),
+    { dispatch: false }
+  );
+
   private handleError(errorRes: HttpErrorResponse) {
-    console.log(errorRes);
     const {
-      errors: { ...errorObj },
+      errors: { ...errors },
     }: { errors?: { message?: string } } = errorRes.error;
-    const errorMes = () => {
+    const errorMes = (errorObj) => {
       if (errorObj) {
         if (errorObj.message) {
           return errorObj.message;
         }
         const capitalize = (s: string) => {
-          if (typeof s !== 'string') return '';
+          if (typeof s !== 'string') {
+            return '';
+          }
           return s.charAt(0).toUpperCase() + s.slice(1);
         };
-        let parameters = [];
-        for (let prop in errorObj)
-          parameters.push(`${capitalize(prop)} ${errorObj[prop]}`);
+        const parameters = [];
+        for (const prop in errorObj) {
+          if (errorObj.hasOwnProperty(prop)) {
+            parameters.push(
+              `${capitalize(prop.split('_').join(' '))} ${errorObj[prop]}`
+            );
+          }
+        }
         return parameters.join('\n');
       }
     };
-    return of(AuthActions.authFail({ error: errorMes() }));
+    return of(AuthActions.authFail({ error: errorMes(errors) }));
   }
-
-  private tokenName = environment.tokenName;
 
   constructor(
     private authService: AuthService,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private store: Store<fromApp.AppState>
   ) {}
 }

@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { take, map, skipWhile } from 'rxjs/operators';
 
 import * as fromApp from '../store/app.reducers';
+import { ResetPasswordComponent } from '../auth/reset-password/reset-password.component';
 
 @Injectable()
 export class AuthGuard implements CanActivateChild {
@@ -23,6 +24,9 @@ export class AuthGuard implements CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    if (route.component === ResetPasswordComponent) {
+      return true;
+    }
     return this.store.pipe(
       select('auth'),
       skipWhile((authState) => authState.authenticated === null),

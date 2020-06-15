@@ -1,5 +1,6 @@
 export interface AuthParams {
-  email: string;
-  password: string;
-  password_confirmation?: string;
+  email?: string;
+  password?: string;
+  passwordConfirmation?: string;
+  resetPasswordToken?: string;
 }

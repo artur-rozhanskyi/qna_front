@@ -5,7 +5,7 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as snakeCase from 'snakecase-keys';
+import snakeCase from 'snakecase-keys';
 
 export class SnakeCaseInterceptor implements HttpInterceptor {
   intercept(

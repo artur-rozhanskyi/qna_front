@@ -1,6 +1,10 @@
 <div class="container h-75">
   <div class="row h-100 justify-content-center align-items-center text-center">
-    <form class="col-md-6 col-sm-9 mx-auto" (ngSubmit)="onSubmit()">
+    <form
+      [formGroup]="authForm"
+      class="col-md-6 col-sm-9 mx-auto"
+      (ngSubmit)="onSubmit()"
+    >
       <h2>Login</h2>
       <div
         class="alert alert-danger text-left"
@@ -9,7 +13,7 @@
       >
         {{ errorMessage }}
       </div>
-      <div class="form-group" [formGroup]="authForm">
+      <div class="form-group">
         <small
           class="form-text text-danger"
           *ngIf="email.touched && email.invalid"
@@ -40,13 +44,13 @@
       </div>
       <button type="submit" class="btn btn-primary w-100">
         Submit
-        <span
-          class="spinner-border spinner-border-sm"
-          role="status"
-          aria-hidden="true"
-          *ngIf="isLoading"
-        ></span>
+        <app-spiner *ngIf="isLoading"></app-spiner>
       </button>
+      <ul class="list-group mt-3">
+        <li class="list-group-item">
+          <a [routerLink]="['forgot-password']">Forgot password?</a>
+        </li>
+      </ul>
     </form>
   </div>
 </div>

@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 
 import * as fromApp from '../../store/app.reducers';
-import { PasswordValidator } from '../validators/password.validator';
 import * as AuthActions from '../store/auth.actions';
+import { PasswordValidator } from '../validators/password.validator';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
@@ -21,7 +21,7 @@ export class SignUpComponent implements OnInit {
         [Validators.required, Validators.minLength(6)],
       ],
     },
-    { validators: PasswordValidator }
+    { validators: PasswordValidator, updateOn: 'submit' }
   );
 
   isLoading = false;
@@ -43,6 +43,17 @@ export class SignUpComponent implements OnInit {
     return this.signUpForm.get(name);
   }
 
+  onSubmit() {
+    if (this.signUpForm.valid) {
+      this.store.dispatch(
+        AuthActions.signUpStart({ auth: this.signUpForm.value })
+      );
+    } else {
+      this.store.dispatch(AuthActions.errorClear());
+      this.signUpForm.markAllAsTouched();
+    }
+  }
+
   constructor(
     private fb: FormBuilder,
     private store: Store<fromApp.AppState>
@@ -55,13 +66,7 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    if (this.signUpForm.valid) {
-      this.store.dispatch(
-        AuthActions.signUpStart({ auth: this.signUpForm.value })
-      );
-    } else {
-      this.signUpForm.markAllAsTouched();
-    }
+  ngOnDestroy() {
+    this.store.dispatch(AuthActions.errorClear());
   }
 }

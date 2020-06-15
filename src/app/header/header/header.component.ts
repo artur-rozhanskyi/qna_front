@@ -29,10 +29,10 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.store.dispatch(AuthActions.logoutStart());
+    this.store.dispatch(AuthActions.logout());
   }
 
   signUp() {
-    this.router.navigate(['/auth', 'regestration']);
+    this.router.navigate(['/auth', 'registration']);
   }
 }

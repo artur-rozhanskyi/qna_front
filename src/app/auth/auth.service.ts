@@ -27,5 +27,17 @@ export class AuthService {
     return this.http.get<User>(`${this.apiUrl}/api/v1/users/me.json`);
   }
 
+  forgotPassword(forgotPasswordParams: AuthParams) {
+    return this.http.post(`${this.apiUrl}/api/v1/users/password.json`, {
+      user: { ...forgotPasswordParams },
+    });
+  }
+
+  resetPassword(resetPasswordParams: AuthParams) {
+    return this.http.patch(`${this.apiUrl}/api/v1/users/password.json`, {
+      user: { ...resetPasswordParams },
+    });
+  }
+
   constructor(private http: HttpClient) {}
 }
