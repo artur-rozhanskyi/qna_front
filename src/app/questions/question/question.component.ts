@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Question } from '../question.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question',
@@ -9,7 +10,11 @@ import { Question } from '../question.model';
 export class QuestionComponent implements OnInit {
   @Input() question: Question;
 
-  constructor() { }
+  onShowQuestion() {
+    this.router.navigate(['/questions', this.question.id]);
+  }
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }

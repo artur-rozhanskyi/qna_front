@@ -14,4 +14,10 @@ export class ApiService {
   getQuestions() {
     return this.http.get<Question[]>(`${this.apiUrl}/api/v1/questions.json`);
   }
+
+  getQuestion(id: string) {
+    return this.http.get<Question>(
+      `${this.apiUrl}/api/v1/questions/${id}.json`
+    );
+  }
 }
