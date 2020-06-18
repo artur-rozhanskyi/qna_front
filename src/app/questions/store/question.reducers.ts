@@ -6,7 +6,7 @@ import * as QuestionActions from './question.actions';
 export interface State {
   questions: Question[],
   errorMessage: string,
-  loading: boolean
+  loading: boolean,
 }
 
 const initialState: State = {
@@ -28,7 +28,12 @@ const questionReducer$ = createReducer(
     ...state,
     errorMessage: payload.errorMessage,
     loading: false
-  }))
+  })),
+  on(QuestionActions.questionCreateFail, (state, payload) => ({
+    ...state,
+    errorMessage: payload.error,
+    loading: false
+  })),
 );
 
 export function questionReducer(state: State | undefined, action: Action) {

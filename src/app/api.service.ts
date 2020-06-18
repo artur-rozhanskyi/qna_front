@@ -20,4 +20,10 @@ export class ApiService {
       `${this.apiUrl}/api/v1/questions/${id}.json`
     );
   }
+
+  createQuestion(questionForm: Question) {
+    return this.http.post<Question>(`${this.apiUrl}/api/v1/questions.json`, {
+      question: { ...questionForm },
+    });
+  }
 }

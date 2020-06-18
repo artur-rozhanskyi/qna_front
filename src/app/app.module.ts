@@ -16,6 +16,7 @@ import { AuthEffects } from './auth/store/auth.effects';
 import { SnakeCaseInterceptor } from './shared/snake-case.interceptor';
 import { TokenInterceptor } from './shared/token.interceptor';
 import { ApiService } from './api.service';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent],
   imports: [

@@ -9,6 +9,11 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [DropdownDirective, ManageButtonComponent, SpinerComponent],
   imports: [CommonModule, RouterModule],
-  exports: [DropdownDirective, ManageButtonComponent, SpinerComponent],
+  exports: [
+    CommonModule,
+    DropdownDirective,
+    ManageButtonComponent,
+    SpinerComponent,
+  ],
 })
 export class SharedModule {}

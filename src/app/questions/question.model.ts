@@ -1,7 +1,7 @@
 import { Attachment } from '../shared/attachment.model';
 
 export interface Question {
-  id: number;
+  id?: number;
   title: string;
   body: string;
   answers?: [];

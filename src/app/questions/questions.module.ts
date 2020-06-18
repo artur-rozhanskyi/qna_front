@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -11,13 +10,21 @@ import { QuestionRoutingModule } from './question-routing.module';
 import { QuestionShowComponent } from './question-show/question-show.component';
 import { QuestionShowResolver } from './resolvers/question-show.resolver';
 import { SharedModule } from '../shared/shared.module';
+import { QuestionNewComponent } from './question-new/question-new.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [QuestionsComponent, QuestionComponent, QuestionShowComponent],
+  declarations: [
+    QuestionsComponent,
+    QuestionComponent,
+    QuestionShowComponent,
+    QuestionNewComponent,
+  ],
   imports: [
-    CommonModule,
-    QuestionRoutingModule,
     SharedModule,
+    QuestionRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     StoreModule.forFeature('questions', questionReducer),
     EffectsModule.forFeature([QuestionEffects]),
   ],
