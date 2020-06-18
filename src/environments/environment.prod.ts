@@ -4,4 +4,5 @@ export const environment = {
   wsUrl: 'wss://ancient-castle-42468.herokuapp.com/cable',
   tokenName: 'token',
   resetPasswordToken: 'resetPasswordToken',
+  attachmentMaxCount: 10,
 };

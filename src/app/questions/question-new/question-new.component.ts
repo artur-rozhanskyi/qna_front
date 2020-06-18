@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  Validators,
+  FormArray,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 
 import * as fromApp from '../../store/app.reducers';
 import * as QuestionActions from '../store/question.actions';
 import { Question } from '../question.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-new',
@@ -21,6 +28,7 @@ export class QuestionNewComponent implements OnInit {
   isEdit = false;
   question: Question;
   backButtonPath = [];
+  files: any;
 
   get title() {
     return this.getControl('title');
@@ -39,10 +47,19 @@ export class QuestionNewComponent implements OnInit {
       this.store.dispatch(
         this.isEdit
           ? QuestionActions.questionUpdate({
-              question: { ...this.question, ...this.questionNewForm.value },
+              question: {
+                id: this.question.id,
+                body: this.question.body,
+                title: this.question.title,
+                ...this.questionNewForm.value,
+                attachmentsAttributes: this.files,
+              },
             })
           : QuestionActions.questionCreate({
-              question: this.questionNewForm.value,
+              question: {
+                ...this.questionNewForm.value,
+                attachmentsAttributes: this.files,
+              },
             })
       );
     } else {
@@ -54,6 +71,10 @@ export class QuestionNewComponent implements OnInit {
     this.router.navigate(this.backButtonPath);
   }
 
+  onAddAttachment(files: any) {
+    this.files = files;
+  }
+
   constructor(
     private fb: FormBuilder,
     private store: Store<fromApp.AppState>,
@@ -62,19 +83,19 @@ export class QuestionNewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.pipe(select('questions')).subscribe((questionsState) => {
-      this.errorMessage = questionsState.errorMessage;
-    });
+    this.store
+      .pipe(select('questions'), withLatestFrom(this.activatedRoute.data))
+      .subscribe(([questionsState, data]) => {
+        this.errorMessage = questionsState.errorMessage;
 
-    this.activatedRoute.data.subscribe((data: { question: Question }) => {
-      if (data.question) {
-        this.question = data.question;
-        this.questionNewForm.patchValue({ ...data.question });
-        this.isEdit = !this.isEdit;
-        this.backButtonPath = ['/questions', data.question.id];
-      } else {
-        this.backButtonPath = ['/questions'];
-      }
-    });
+        if (data.question) {
+          this.question = data.question;
+          this.questionNewForm.patchValue({ ...data.question });
+          this.isEdit = !this.isEdit;
+          this.backButtonPath = ['/questions', data.question.id];
+        } else {
+          this.backButtonPath = ['/questions'];
+        }
+      });
   }
 }

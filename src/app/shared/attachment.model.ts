@@ -1,5 +1,6 @@
 export interface Attachment {
   filename: string;
   id: number;
-  src: string;
+  url: string;
+  contentType: string;
 }

@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { QuestionNewComponent } from './question-new/question-new.component';
 import { AnswersModule } from '../answers/answers.module';
 import { CommentsModule } from '../comments/comments.module';
+import { AttachmentsModule } from '../attachments/attachments.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CommentsModule } from '../comments/comments.module';
   ],
   imports: [
     AnswersModule,
+    AttachmentsModule,
     CommentsModule,
     SharedModule,
     QuestionRoutingModule,

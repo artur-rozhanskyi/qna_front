@@ -13,8 +13,12 @@ export class SnakeCaseInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     if (request.body !== null) {
+      const opts: snakeCase.Options = {
+        exclude: ['_destroy']
+      };
+
       const cloneReq = request.clone({
-        body: snakeCase(request.body),
+        body: snakeCase(request.body, opts),
       });
       return next.handle(cloneReq);
     }
