@@ -6,9 +6,13 @@ export const FETCH_QUESTIONS = '[Questions] Fetch Questions';
 export const SET_QUESTIONS = '[Questions] Set Questions';
 export const LOAD_FAIL = '[Questions] LOAD_FAIL';
 export const QUESTION_CREATE = '[Questions] Question Create';
-export const QUESTION_CREATE_OR_UPDATE_SUCCESS = '[Questions] Question Create Or Update Success';
-export const QUESTION_CREATE_OR_UPDATE_FAIL = '[Questions] Question Create Or Update Fail';
+export const QUESTION_CREATE_OR_UPDATE_SUCCESS =
+  '[Questions] Question Create Or Update Success';
+export const QUESTION_CREATE_OR_UPDATE_FAIL =
+  '[Questions] Question Create Or Update Fail';
 export const QUESTION_UPDATE = '[Questions] Question Update';
+export const QUESTION_DELETE = '[Questions] Question Delete';
+export const QUESTION_DELETE_SUCCESS = '[Questions] Question Delete Success';
 
 export const fetchQuestions = createAction(FETCH_QUESTIONS);
 export const setQuestions = createAction(
@@ -36,3 +40,8 @@ export const questionUpdate = createAction(
   QUESTION_UPDATE,
   props<{ question: Question }>()
 );
+export const questionDelete = createAction(
+  QUESTION_DELETE,
+  props<{ question: Question }>()
+);
+export const questionDeleteSuccess = createAction(QUESTION_DELETE_SUCCESS);

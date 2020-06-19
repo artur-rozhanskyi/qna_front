@@ -35,4 +35,8 @@ export class ApiService {
       }
     );
   }
+
+  deleteQuestion(question: Question) {
+    return this.http.delete(`${this.apiUrl}/api/v1/questions/${question.id}.json`);
+  }
 }

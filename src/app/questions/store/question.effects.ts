@@ -71,6 +71,26 @@ export class QuestionEffects {
     )
   );
 
+  questionDelete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuestionActions.questionDelete),
+      exhaustMap((questionDeleteAction) =>
+        this.apiService
+          .deleteQuestion(questionDeleteAction.question)
+          .pipe(switchMap(() => of(QuestionActions.questionDeleteSuccess())))
+      )
+    )
+  );
+
+  questionDeleteSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(QuestionActions.questionDeleteSuccess),
+        tap(() => this.router.navigate(['/questions']))
+      ),
+    { dispatch: false }
+  );
+
   private handleError(errorRes: HttpErrorResponse) {
     const {
       errors: { ...errors },
