@@ -12,13 +12,7 @@
     <app-question *ngFor="let question of questions" [question]="question">
     </app-question>
   </div>
-  <nav class="col-2">
-    <button
-      type="button"
-      [routerLink]="['/questions/new']"
-      class="btn btn-success"
-    >
-      New
-    </button>
-  </nav>
+  <div class="col-2">
+    <app-question-navigate *ngIf="!loading"></app-question-navigate>
+  </div>
 </div>

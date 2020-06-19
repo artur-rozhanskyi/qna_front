@@ -7,15 +7,16 @@ import {
 
 import { ApiService } from 'src/app/api.service';
 import { Observable } from 'rxjs';
+import { Question } from '../question.model';
 
 @Injectable({ providedIn: 'root' })
-export class QuestionShowResolver implements Resolve<any> {
+export class QuestionShowResolver implements Resolve<Question> {
   constructor(private api: ApiService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<any> | Promise<any> | any {
+  ): Observable<Question> | Promise<Question> | Question {
     return this.api.getQuestion(route.paramMap.get('id'));
   }
 }

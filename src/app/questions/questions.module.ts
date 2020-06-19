@@ -11,7 +11,6 @@ import { QuestionShowComponent } from './question-show/question-show.component';
 import { QuestionShowResolver } from './resolvers/question-show.resolver';
 import { SharedModule } from '../shared/shared.module';
 import { QuestionNewComponent } from './question-new/question-new.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   imports: [
     SharedModule,
     QuestionRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     StoreModule.forFeature('questions', questionReducer),
     EffectsModule.forFeature([QuestionEffects]),
   ],

@@ -4,7 +4,7 @@ export interface User {
   role: string;
   profile: {
     id: number;
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
   };
 }

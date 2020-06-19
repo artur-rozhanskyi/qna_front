@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Question } from '../question.model';
 
 import * as QuestionActions from '../store/question.actions';
+import { Role } from 'src/app/shared/role';
 
 @Component({
   selector: 'app-question-show',
@@ -13,6 +14,8 @@ export class QuestionShowComponent implements OnInit {
   questionShow: Question;
   editLink: Array<string | number>;
   deleteAction;
+  isOwner = false;
+  Role = Role;
 
   constructor(private activatedRoute: ActivatedRoute) {}
 

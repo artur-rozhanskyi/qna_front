@@ -6,4 +6,5 @@ export interface Question {
   body: string;
   answers?: [];
   attachments?: Attachment[];
+  userId: number;
 }
