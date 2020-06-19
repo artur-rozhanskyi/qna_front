@@ -14,6 +14,11 @@ const questionsRoutes: Routes = [
     component: QuestionShowComponent,
     resolve: { question: QuestionShowResolver },
   },
+  {
+    path: ':id/edit',
+    component: QuestionNewComponent,
+    resolve: { question: QuestionShowResolver },
+  },
 ];
 
 @NgModule({

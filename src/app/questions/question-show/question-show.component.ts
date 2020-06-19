@@ -9,12 +9,14 @@ import { Question } from '../question.model';
 })
 export class QuestionShowComponent implements OnInit {
   questionShow: Question;
+  editLink: Array<string | number>;
 
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe((data: { question: Question }) => {
       this.questionShow = data.question;
+      this.editLink = ['/questions', data.question.id, 'edit'];
     });
   }
 }

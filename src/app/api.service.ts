@@ -26,4 +26,13 @@ export class ApiService {
       question: { ...questionForm },
     });
   }
+
+  updateQuestion(question: Question) {
+    return this.http.put<Question>(
+      `${this.apiUrl}/api/v1/questions/${question.id}.json`,
+      {
+        question: { ...question },
+      }
+    );
+  }
 }

@@ -31,7 +31,7 @@ export class QuestionEffects {
       exhaustMap((questionCreateAction) =>
         this.apiService.createQuestion(questionCreateAction.question).pipe(
           switchMap((question) =>
-            of(QuestionActions.questionCreateSuccess({ question }))
+            of(QuestionActions.questionCreateOrUpdateSuccess({ question }))
           ),
           catchError((error) => this.handleError(error))
         )
@@ -39,15 +39,36 @@ export class QuestionEffects {
     )
   );
 
-  questionCreateSuccess$ = createEffect(
+  questionCreateOrUpdateSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(QuestionActions.questionCreateSuccess),
+        ofType(QuestionActions.questionCreateOrUpdateSuccess),
         tap((questionAction) =>
           this.router.navigate(['/questions', questionAction.question.id])
         )
       ),
     { dispatch: false }
+  );
+
+  questionUpdate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuestionActions.questionUpdate),
+      exhaustMap((questionUpdateAction) => {
+        const send_question = questionUpdateAction.question;
+        return this.apiService
+          .updateQuestion(questionUpdateAction.question)
+          .pipe(
+            switchMap(() =>
+              of(
+                QuestionActions.questionCreateOrUpdateSuccess({
+                  question: send_question,
+                })
+              )
+            ),
+            catchError((error) => this.handleError(error))
+          );
+      })
+    )
   );
 
   private handleError(errorRes: HttpErrorResponse) {

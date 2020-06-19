@@ -8,6 +8,10 @@
   {{ errorMes }}
 </div>
 <div class="row mt-3">
+  <div class="col-10">
+    <app-question *ngFor="let question of questions" [question]="question">
+    </app-question>
+  </div>
   <nav class="col-2">
     <button
       type="button"
@@ -17,8 +21,4 @@
       New
     </button>
   </nav>
-  <div class="col-10">
-    <app-question *ngFor="let question of questions" [question]="question">
-    </app-question>
-  </div>
 </div>
