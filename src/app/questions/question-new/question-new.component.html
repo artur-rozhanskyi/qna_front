@@ -1,45 +1,48 @@
-<h1 style="text-align: center;">
-  {{ isEdit ? "Edit Question" : "New Question" }}
-</h1>
-<div class="col-10 mx-auto">
-  <div class="row alert alert-danger" *ngIf="errorMessage">
-    {{ errorMessage }}
-  </div>
-  <form [formGroup]="questionNewForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label>Title</label>
+<div class="row">
+  <h1 class="col-12 mt-3 text-center">
+    {{ isEdit ? "Edit Question" : "New Question" }}
+  </h1>
+  <div class="col-10 mx-auto">
+    <div class="row alert alert-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <form [formGroup]="questionNewForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Title</label>
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="title.invalid && title.touched"
+          formControlName="title"
+        />
+        <div class="text-danger" *ngIf="title.invalid && title.touched">
+          Title is reqired
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Body</label>
+        <textarea
+          formControlName="body"
+          class="form-control"
+          [class.is-invalid]="body.invalid && body.touched"
+          rows="3"
+        ></textarea>
+        <div class="text-danger" *ngIf="body.invalid && body.touched">
+          Body is reqired
+        </div>
+      </div>
       <input
-        type="text"
-        class="form-control"
-        [class.is-invalid]="title.invalid && title.touched"
-        formControlName="title"
+        class="btn btn-primary"
+        type="submit"
+        [value]="isEdit ? 'Update' : 'Submit'"
       />
-      <div class="text-danger" *ngIf="title.invalid && title.touched">
-        Title is reqired
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Body</label>
-      <textarea
-        formControlName="body"
-        class="form-control"
-        [class.is-invalid]="body.invalid && body.touched"
-        rows="3"
-      ></textarea>
-      <div class="text-danger" *ngIf="body.invalid && body.touched">
-        Body is reqired
-      </div>
-    </div>
-    <input
-      class="btn btn-primary"
-      type="submit"
-      [value]="isEdit ? 'Update' : 'Submit'"
-    /> | 
-    <input
-      class="btn btn-secondary"
-      type="button"
-      value="Back"
-      (click)="onBack()"
-    />
-  </form>
+      |
+      <input
+        class="btn btn-secondary"
+        type="button"
+        value="Back"
+        (click)="onBack()"
+      />
+    </form>
+  </div>
 </div>
