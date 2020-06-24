@@ -15,7 +15,7 @@ import { QuestionShowComponent } from '../question-show/question-show.component'
 
 @Injectable()
 export class QuestionsGuard implements CanActivateChild {
- allowedComponent = [QuestionsComponent, QuestionShowComponent]
+ allowedComponent = [QuestionsComponent, QuestionShowComponent];
 
   constructor(private store: Store<fromApp.AppState>) {}
 
@@ -27,7 +27,7 @@ export class QuestionsGuard implements CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.allowedComponent.some((component)=> component === route.component)) {
+    if (this.allowedComponent.some((component) => component === route.component)) {
       return true;
     }
     return this.store.pipe(

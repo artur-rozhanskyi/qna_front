@@ -9,7 +9,7 @@ import * as fromApp from '../../store/app.reducers';
   styleUrls: ['./manage-button.component.scss'],
 })
 export class ManageButtonComponent implements OnInit {
-  @Input() editLink: string = '';
+  @Input() editLink = '';
   @Input() dispachDeleteAction;
 
   onDelete() {

@@ -76,7 +76,10 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.logout),
-        tap(() => localStorage.removeItem(environment.tokenName))
+        tap(() => {
+          localStorage.removeItem(environment.tokenName);
+          this.router.navigate(['/']);
+        })
       ),
     { dispatch: false }
   );

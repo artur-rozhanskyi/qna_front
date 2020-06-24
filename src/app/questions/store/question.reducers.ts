@@ -4,9 +4,9 @@ import { Question } from '../question.model';
 import * as QuestionActions from './question.actions';
 
 export interface State {
-  questions: Question[],
-  errorMessage: string,
-  loading: boolean,
+  questions: Question[];
+  errorMessage: string;
+  loading: boolean;
 }
 
 const initialState: State = {

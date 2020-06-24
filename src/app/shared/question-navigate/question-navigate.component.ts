@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
 export class QuestionNavigateComponent implements OnInit {
   isAuthenticated = false;
   Role = Role;
-  current_route: string;
+  currentRoute: string;
   constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 
   ngOnInit(): void {
-    this.current_route = this.router.url;
+    this.currentRoute = this.router.url;
     this.store.pipe(select('auth')).subscribe((authState) => {
       this.isAuthenticated = authState.authenticated;
     });

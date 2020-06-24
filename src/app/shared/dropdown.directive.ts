@@ -3,9 +3,9 @@ import { Directive, HostListener, ElementRef } from '@angular/core';
 @Directive({ selector: '[appDropdown]' })
 export class DropdownDirective {
   @HostListener('click') onclick() {
-    let parent = this.el.nativeElement; //parent element
+    const parent = this.el.nativeElement;
     parent.classList.toggle('show');
-    let child = [].filter.call(this.el.nativeElement.children, (ele) =>
+    const child = [].filter.call(this.el.nativeElement.children, (ele) =>
       ele.classList.contains('dropdown-menu')
     );
 

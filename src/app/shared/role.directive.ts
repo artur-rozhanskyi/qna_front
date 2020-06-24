@@ -40,7 +40,7 @@ export class RoleDirective implements OnInit {
     this.store.pipe(select('auth')).subscribe((authState) => {
       if (authState.authenticated && this.userRoles) {
         hasAccess =
-          parseInt(this.ownerId) === authState.user.id &&
+          parseInt(this.ownerId, 10) === authState.user.id &&
           this.userRoles.some((role) => authState.user.role === role);
       }
       hasAccess && !this.viewContainer.length

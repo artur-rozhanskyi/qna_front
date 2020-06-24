@@ -54,14 +54,14 @@ export class QuestionEffects {
     this.actions$.pipe(
       ofType(QuestionActions.questionUpdate),
       exhaustMap((questionUpdateAction) => {
-        const send_question = questionUpdateAction.question;
+        const sendQuestion = questionUpdateAction.question;
         return this.apiService
           .updateQuestion(questionUpdateAction.question)
           .pipe(
             switchMap(() =>
               of(
                 QuestionActions.questionCreateOrUpdateSuccess({
-                  question: send_question,
+                  question: sendQuestion,
                 })
               )
             ),
