@@ -9,4 +9,4 @@ import { AppRoutingModule } from '../app-routing.module';
   imports: [AppRoutingModule, CommonModule],
   exports: [HeaderComponent, AppRoutingModule],
 })
-export class HeaderModule { }
+export class HeaderModule {}

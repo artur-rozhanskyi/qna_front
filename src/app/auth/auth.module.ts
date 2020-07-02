@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth/auth.component';
@@ -20,10 +18,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     AuthRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     StoreModule.forFeature('auth', authReducer),
-    CommonModule,
     SharedModule,
   ],
 })

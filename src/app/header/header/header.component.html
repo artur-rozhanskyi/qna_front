@@ -2,7 +2,7 @@
   <a href="#" class="navbar-brand ml-4">QnA</a>
   <ul class="navbar-nav mr-auto">
     <li class="nav-item" *ngFor="let item of menu" routerLinkActive="active">
-      <a class="nav-link" [routerLink]="item.link"> {{ item.name }}</a>
+      <a class="nav-link" [routerLink]="item.link"> {{ item.name | uppercase }}</a>
     </li>
   </ul>
 

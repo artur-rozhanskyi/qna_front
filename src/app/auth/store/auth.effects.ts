@@ -76,7 +76,10 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.logout),
-        tap(() => localStorage.removeItem(environment.tokenName))
+        tap(() => {
+          localStorage.removeItem(environment.tokenName);
+          this.router.navigate(['/']);
+        })
       ),
     { dispatch: false }
   );
@@ -88,11 +91,11 @@ export class AuthEffects {
         tap((tokenAction) => {
           localStorage.setItem(
             environment.tokenName,
-            tokenAction.token.access_token
+            tokenAction.token.accessToken
           );
           setInterval(
             () => localStorage.removeItem(environment.tokenName),
-            tokenAction.token.expires_in * 1000
+            tokenAction.token.expiresIn * 1000
           );
         })
       ),
