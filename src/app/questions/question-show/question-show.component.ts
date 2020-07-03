@@ -4,6 +4,9 @@ import { Question } from '../question.model';
 
 import * as QuestionActions from '../store/question.actions';
 import { Role } from 'src/app/shared/role';
+import * as fromApp from '../../store/app.reducers';
+import { Store, select } from '@ngrx/store';
+import { withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-show',
@@ -16,8 +19,12 @@ export class QuestionShowComponent implements OnInit {
   deleteAction;
   isOwner = false;
   Role = Role;
+  isAuth;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private store: Store<fromApp.AppState>
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe((data: { question: Question }) => {
@@ -27,5 +34,9 @@ export class QuestionShowComponent implements OnInit {
         question: data.question,
       });
     });
+
+    this.store
+      .pipe(select('auth'))
+      .subscribe((authState) => (this.isAuth = authState.authenticated));
   }
 }

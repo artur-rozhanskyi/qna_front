@@ -3,8 +3,8 @@ import { AnswersComponent } from './answers.component';
 import { AnswerComponent } from './answer/answer.component';
 import { AttachmentsComponent } from './attachments/attachments.component';
 import { AttachmentComponent } from './attachments/attachment/attachment.component';
+import { AnswerNewComponent } from './answer-new/answer-new.component';
 import { SharedModule } from '../shared/shared.module';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -12,8 +12,9 @@ import { CommonModule } from '@angular/common';
     AnswerComponent,
     AttachmentsComponent,
     AttachmentComponent,
+    AnswerNewComponent,
   ],
-  imports: [CommonModule],
-  exports: [AnswersComponent],
+  imports: [SharedModule],
+  exports: [AnswersComponent, AnswerNewComponent],
 })
 export class AnswersModule {}

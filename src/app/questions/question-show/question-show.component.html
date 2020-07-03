@@ -49,3 +49,8 @@
 <div class="answers">
   <app-answers [answers]="questionShow.answers"></app-answers>
 </div>
+<div class="new-answer" *ngIf="isAuth">
+  <hr />
+  <h2>Your answer</h2>
+  <app-answer-new></app-answer-new>
+</div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Question } from './questions/question.model';
 import { environment } from '../environments/environment';
+import { Answer } from './answers/answer.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,17 @@ export class ApiService {
   }
 
   deleteQuestion(question: Question) {
-    return this.http.delete(`${this.apiUrl}/api/v1/questions/${question.id}.json`);
+    return this.http.delete(
+      `${this.apiUrl}/api/v1/questions/${question.id}.json`
+    );
+  }
+
+  createAnswer(question: Question, answerForm: Answer) {
+    return this.http.post(
+      `${this.apiUrl}/api/v1/questions/${question.id}/answers.json`,
+      {
+        answer: { ...answerForm },
+      }
+    );
   }
 }
