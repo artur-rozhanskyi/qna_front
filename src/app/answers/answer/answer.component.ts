@@ -10,6 +10,11 @@ import { Role } from '../../shared/role';
 export class AnswerComponent implements OnInit {
   @Input() answer: Answer;
   Role = Role;
+  isEditOpen = false;
+
+  onEditOpen(event: boolean) {
+    this.isEditOpen = event;
+  }
 
   constructor() { }
 

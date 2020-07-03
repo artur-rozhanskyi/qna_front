@@ -51,4 +51,13 @@ export class ApiService {
       }
     );
   }
+
+  updateAnswer(answerForm: Answer) {
+    return this.http.patch(
+      `${this.apiUrl}/api/v1/answers/${answerForm.id}.json`,
+      {
+        answer: { ...answerForm },
+      }
+    );
+  }
 }

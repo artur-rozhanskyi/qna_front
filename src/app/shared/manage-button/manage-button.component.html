@@ -3,7 +3,7 @@
     Manage
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" [routerLink]="editLink">Edit</a>
+    <a class="dropdown-item" (click)="onEdit()">Edit</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item delete" (click)="onDelete()">Delete</a>
   </div>
