@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 
 import * as fromApp from '../../store/app.reducers';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Component({
   selector: 'app-manage-button',
@@ -23,7 +24,11 @@ export class ManageButtonComponent implements OnInit {
   }
 
   onDelete() {
-    this.store.dispatch(this.dispachDeleteAction());
+    if (this.dispachDeleteAction) {
+      // this.store.dispatch(this.dispachDeleteAction());
+      console.log("here")
+      this.dispachDeleteAction();
+    }
   }
   constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 

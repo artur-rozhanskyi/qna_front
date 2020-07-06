@@ -10,6 +10,7 @@
       <div class="col m-2">
         <app-manage-button
           *appUserRole="[Role.User, Role.Admin]; owner: answer.userId"
+          [dispachDeleteAction]="onDelete"
           (open)="onEditOpen($event)"
         ></app-manage-button>
       </div>
