@@ -15,7 +15,10 @@ export class HeaderComponent implements OnInit {
   isAuthenticated: boolean;
   isLoading: boolean;
 
-  constructor(private store: Store<fromApp.AppState>, private router: Router) {}
+  constructor(
+    private store: Store<fromApp.AppState>,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.store.pipe(select('auth')).subscribe((authState) => {

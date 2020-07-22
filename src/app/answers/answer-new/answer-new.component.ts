@@ -11,10 +11,11 @@ import { Answer } from '../answer.interface';
   styleUrls: ['./answer-new.component.scss'],
 })
 export class AnswerNewComponent implements OnInit {
+  @Input() answer: Answer;
+  @Input() isEdit = false;
+  @Output() isOpen = new EventEmitter<boolean>();
   answerForm = this.fb.group({ body: ['', [Validators.required]] });
   question: Question;
-  @Input() isEdit = false;
-  @Output() open = new EventEmitter<boolean>();
 
   onSubmit() {
     if (this.answerForm.valid) {
@@ -32,7 +33,7 @@ export class AnswerNewComponent implements OnInit {
   }
 
   onBack() {
-    this.open.emit(false);
+    this.isOpen.emit(false);
   }
 
   get body() {

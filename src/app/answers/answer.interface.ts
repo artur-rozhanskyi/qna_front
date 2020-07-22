@@ -5,5 +5,5 @@ export interface Answer {
   body: string;
   attachments?: Attachment[];
   questionId: number;
-  userId: number
+  userId: number;
 }

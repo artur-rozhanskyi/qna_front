@@ -17,6 +17,10 @@ import { SnakeCaseInterceptor } from './shared/snake-case.interceptor';
 import { TokenInterceptor } from './shared/token.interceptor';
 import { ApiService } from './api.service';
 import { CamelCaseResponceInterceptor } from './shared/camel-case-responce.intercetor';
+import { WebSocketService } from './cable/websocket.service';
+import { QuestionSocketService } from './cable/question-socket.service.service';
+import { ChannelService } from './cable/channel.service';
+import { AnswerSocketService } from './cable/answer-socket.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +36,10 @@ import { CamelCaseResponceInterceptor } from './shared/camel-case-responce.inter
   ],
   providers: [
     ApiService,
+    WebSocketService,
+    QuestionSocketService,
+    AnswerSocketService,
+    ChannelService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SnakeCaseInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-
 import * as fromApp from '../../store/app.reducers';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Component({
   selector: 'app-manage-button',
@@ -13,20 +11,21 @@ import { Action } from 'rxjs/internal/scheduler/Action';
 export class ManageButtonComponent implements OnInit {
   @Input() editLink;
   @Input() dispachDeleteAction;
-  @Output() open = new EventEmitter<boolean>();
+  @Input() isStoreDispatch: boolean;
+  @Output() isOpen = new EventEmitter<boolean>();
 
   onEdit() {
     if (this.editLink) {
-      this.router.navigate([this.editLink]);
+      this.router.navigate(this.editLink);
     } else {
-      this.open.emit(true);
+      this.isOpen.emit(true);
     }
   }
 
   onDelete() {
-    if (this.dispachDeleteAction) {
-      // this.store.dispatch(this.dispachDeleteAction());
-      console.log("here")
+    if (this.isStoreDispatch) {
+      this.store.dispatch(this.dispachDeleteAction());
+    } else {
       this.dispachDeleteAction();
     }
   }

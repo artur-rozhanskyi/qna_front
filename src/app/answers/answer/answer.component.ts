@@ -14,10 +14,10 @@ export class AnswerComponent implements OnInit {
   isEditOpen = false;
   onDelete = () => {
     this.api.deleteAnswer(this.answer).subscribe();
-  };
+  }
 
-  onEditOpen(event: boolean) {
-    this.isEditOpen = event;
+  onEditOpen(isOpen: boolean) {
+    this.isEditOpen = isOpen;
   }
 
   constructor(private api: ApiService) {}

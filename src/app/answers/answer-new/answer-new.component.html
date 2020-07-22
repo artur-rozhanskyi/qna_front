@@ -7,13 +7,20 @@
       formControlName="body"
     />
   </div>
-  <input class="btn btn-primary" type="submit" value="Submit" />
-  <button
-    *ngIf="isEdit"
-    class="btn btn-danger"
-    (click)="onBack()"
-    type="button"
-  >
-    Cancel
-  </button>
+  <input
+    class="btn btn-primary"
+    type="submit"
+    [value]="isEdit ? 'Update' : 'Submit'"
+  />
+  <ng-container *ngIf="isEdit" #editBackButton>
+    |
+    <button
+      *ngIf="isEdit"
+      class="btn btn-danger"
+      (click)="onBack()"
+      type="button"
+    >
+      Cancel
+    </button>
+  </ng-container>
 </form>
