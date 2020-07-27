@@ -11,6 +11,7 @@ import { QuestionShowComponent } from './question-show/question-show.component';
 import { QuestionShowResolver } from './resolvers/question-show.resolver';
 import { SharedModule } from '../shared/shared.module';
 import { QuestionNewComponent } from './question-new/question-new.component';
+import { AnswersModule } from '../answers/answers.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { QuestionNewComponent } from './question-new/question-new.component';
     QuestionNewComponent,
   ],
   imports: [
+    AnswersModule,
     SharedModule,
     QuestionRoutingModule,
     StoreModule.forFeature('questions', questionReducer),

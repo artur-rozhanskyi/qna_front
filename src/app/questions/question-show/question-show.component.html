@@ -37,6 +37,7 @@
           *appUserRole="[Role.User, Role.Admin];owner:questionShow.userId"
           [editLink]="editLink"
           [dispachDeleteAction]="deleteAction"
+          [isStoreDispatch]="true"
         ></app-manage-button>
       </div>
     </div>
@@ -44,4 +45,13 @@
   <div class="col-2 mt-3">
     <app-question-navigate></app-question-navigate>
   </div>
+</div>
+<hr />
+<div class="answers">
+  <app-answers [answers]="questionShow.answers"></app-answers>
+</div>
+<div class="new-answer" *ngIf="isAuth">
+  <hr />
+  <h2>Your answer</h2>
+  <app-answer-new></app-answer-new>
 </div>

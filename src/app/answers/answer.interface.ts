@@ -1,11 +1,9 @@
 import { Attachment } from '../shared/attachment.model';
-import { Answer } from '../answers/answer.interface';
 
-export interface Question {
+export interface Answer {
   id?: number;
-  title: string;
   body: string;
-  answers?: Answer[];
   attachments?: Attachment[];
+  questionId: number;
   userId: number;
 }
