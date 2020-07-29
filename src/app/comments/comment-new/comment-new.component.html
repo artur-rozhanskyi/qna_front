@@ -1,0 +1,28 @@
+<button
+  *ngIf="!isFormOpen; else form"
+  (click)="onAddComment()"
+  class="btn btn-primary mb-3"
+  type="button"
+>
+  Add comment
+</button>
+<ng-template #form>
+  <form
+    [formGroup]="commentForm"
+    class="mb-3 form-inline"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="form-group">
+      <input
+        class="form-control input-body"
+        [class.is-invalid]="body.invalid && body.touched"
+        type="text"
+        formControlName="body"
+      />
+    </div>
+    <input class="btn btn-primary ml-2" type="submit" value="Submit" />
+    <button class="btn btn-danger ml-2" (click)="onBack()" type="button">
+      Cancel
+    </button>
+  </form>
+</ng-template>

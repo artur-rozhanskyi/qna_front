@@ -1,13 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Question } from '../question.model';
+import { Store, select } from '@ngrx/store';
 
 import * as QuestionActions from '../store/question.actions';
-import { Role } from 'src/app/shared/role';
 import * as fromApp from '../../store/app.reducers';
-import { Store, select } from '@ngrx/store';
+import { Question } from '../question.model';
+import { Answer } from '../../answers/answer.interface';
+import { Comment } from '../../comments/comment.model';
+import { Role } from 'src/app/shared/role';
 import { AnswerSocketService } from '../../cable/answer-socket.service';
-import { Answer } from 'src/app/answers/answer.interface';
+import { CommentSocketService } from '../../cable/comment-socket.service';
 
 @Component({
   selector: 'app-question-show',
@@ -21,11 +23,34 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
   isOwner = false;
   Role = Role;
   isAuth: boolean;
+  commenter = 'question';
+
+  private workWithArray(arr: Array<Comment | Answer>, message: any) {
+    switch (message.action) {
+      case 'create':
+        arr.push(message.object);
+        break;
+      case 'update':
+        arr.splice(
+          arr.findIndex((object) => object.id === message.object.id),
+          1,
+          message.object
+        );
+        break;
+      case 'destroy':
+        arr.splice(
+          arr.findIndex((object) => object.id === message.object.id),
+          1
+        );
+        break;
+    }
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
-    private aSocket: AnswerSocketService
+    private aSocket: AnswerSocketService,
+    private cSocket: CommentSocketService
   ) {}
 
   ngOnInit(): void {
@@ -40,26 +65,29 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
     this.aSocket.setQuestion(this.questionShow);
     this.aSocket.answer$.subscribe(
       (message: { answer: Answer; action: string }) => {
-        switch (message.action) {
-          case 'create':
-            this.questionShow.answers.push(message.answer);
+        this.workWithArray(this.questionShow.answers, {
+          ...message,
+          object: message.answer,
+        });
+      }
+    );
+
+    this.cSocket.comment$.subscribe(
+      (message: { comment: Comment; action: string }) => {
+        const mapping = { ...message, object: message.comment };
+        switch (message.comment.commentableType.toLowerCase()) {
+          case 'question':
+            if (this.questionShow.id === message.comment.commentableId) {
+              this.workWithArray(this.questionShow.comments, mapping);
+            }
             break;
-          case 'update':
-            this.questionShow.answers.splice(
-              this.questionShow.answers.findIndex(
-                (answer) => answer.id === message.answer.id
-              ),
-              1,
-              message.answer
+          case 'answer':
+            const answer = this.questionShow.answers.find(
+              (ans) => ans.id === message.comment.commentableId
             );
-            break;
-          case 'destroy':
-            this.questionShow.answers.splice(
-              this.questionShow.answers.findIndex(
-                (answer) => answer.id === message.answer.id
-              ),
-              1
-            );
+            if (answer) {
+              this.workWithArray(answer.comments, mapping);
+            }
             break;
         }
       }
@@ -72,5 +100,6 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.aSocket.unsubscribe(this.questionShow);
+    this.cSocket.unsubscribe();
   }
 }

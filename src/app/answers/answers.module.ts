@@ -5,6 +5,7 @@ import { AttachmentsComponent } from './attachments/attachments.component';
 import { AttachmentComponent } from './attachments/attachment/attachment.component';
 import { AnswerNewComponent } from './answer-new/answer-new.component';
 import { SharedModule } from '../shared/shared.module';
+import { CommentsModule } from '../comments/comments.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
     AttachmentComponent,
     AnswerNewComponent,
   ],
-  imports: [SharedModule],
+  imports: [CommentsModule, SharedModule],
   exports: [AnswersComponent, AnswerNewComponent],
 })
 export class AnswersModule {}

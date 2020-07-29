@@ -64,4 +64,12 @@ export class ApiService {
   deleteAnswer(answer: Answer) {
     return this.http.delete(`${this.apiUrl}/api/v1/answers/${answer.id}.json`);
   }
+
+  createComment(comment, commenterString: string, commenter: Question | Answer) {
+    const requestObject = {
+      comment: { ...comment },
+    };
+    requestObject[`${commenterString}_id`] = commenter.id;
+    return this.http.post(`${this.apiUrl}/api/v1/comments.json`, requestObject);
+  }
 }

@@ -12,6 +12,7 @@ import { QuestionShowResolver } from './resolvers/question-show.resolver';
 import { SharedModule } from '../shared/shared.module';
 import { QuestionNewComponent } from './question-new/question-new.component';
 import { AnswersModule } from '../answers/answers.module';
+import { CommentsModule } from '../comments/comments.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AnswersModule } from '../answers/answers.module';
   ],
   imports: [
     AnswersModule,
+    CommentsModule,
     SharedModule,
     QuestionRoutingModule,
     StoreModule.forFeature('questions', questionReducer),

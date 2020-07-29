@@ -34,13 +34,19 @@
 
       <div class="col-lg-2 col-md-3 col-sm-4 mt-3 mb-2">
         <app-manage-button
-          *appUserRole="[Role.User, Role.Admin];owner:questionShow.userId"
+          *appUserRole="[Role.User, Role.Admin]; owner: questionShow.userId"
           [editLink]="editLink"
           [dispachDeleteAction]="deleteAction"
           [isStoreDispatch]="true"
         ></app-manage-button>
       </div>
     </div>
+    <app-comments [comments]="questionShow.comments"></app-comments>
+    <app-comment-new
+      *ngIf="isAuth"
+      [commenter]="commenter"
+      [commenterObject]="questionShow"
+    ></app-comment-new>
   </div>
   <div class="col-2 mt-3">
     <app-question-navigate></app-question-navigate>
