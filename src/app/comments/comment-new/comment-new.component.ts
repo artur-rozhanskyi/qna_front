@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/api.service';
 import { Answer } from 'src/app/answers/answer.interface';
 import { Question } from 'src/app/questions/question.model';
+import { Comment } from 'src/app/comments/comment.model';
 
 @Component({
   selector: 'app-comment-new',
@@ -12,27 +13,41 @@ import { Question } from 'src/app/questions/question.model';
 export class CommentNewComponent implements OnInit {
   @Input() commenter: string;
   @Input() commenterObject: Question | Answer;
-  isFormOpen = false;
+  @Input() comment: Comment;
+  @Input() isEdit = false;
+  @Input() isFormOpen = false;
+  @Output() closeEvent = new EventEmitter<boolean>();
   commentForm = this.fb.group({ body: ['', Validators.required] });
 
   onAddComment() {
-    this.isFormOpen = !this.isFormOpen;
+    this.closeEvent.emit(false);
+    this.commentForm.markAsUntouched();
   }
 
   onBack() {
     this.onAddComment();
   }
 
+  onSubmitSuccess() {
+    this.closeEvent.emit(false);
+    this.commentForm.patchValue({ body: '' });
+  }
+
   onSubmit() {
     if (this.commentForm.valid) {
-      this.apiService
-        .createComment(
-          this.commentForm.value,
-          this.commenter,
-          this.commenterObject
-        )
-        .subscribe(() => this.onAddComment());
-      this.commentForm.patchValue({ body: '' });
+      if (this.isEdit) {
+        this.apiService
+          .updateComment({ ...this.comment, ...this.commentForm.value })
+          .subscribe(() => this.onSubmitSuccess());
+      } else {
+        this.apiService
+          .createComment(
+            this.commentForm.value,
+            this.commenter,
+            this.commenterObject
+          )
+          .subscribe(() => this.onSubmitSuccess());
+      }
     }
   }
 
@@ -46,5 +61,9 @@ export class CommentNewComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private apiService: ApiService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.isEdit) {
+      this.commentForm.patchValue(this.comment);
+    }
+  }
 }

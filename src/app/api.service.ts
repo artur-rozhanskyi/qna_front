@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Question } from './questions/question.model';
 import { environment } from '../environments/environment';
 import { Answer } from './answers/answer.interface';
+import { Comment } from './comments/comment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -65,11 +66,22 @@ export class ApiService {
     return this.http.delete(`${this.apiUrl}/api/v1/answers/${answer.id}.json`);
   }
 
-  createComment(comment, commenterString: string, commenter: Question | Answer) {
+  createComment(
+    comment,
+    commenterString: string,
+    commenter: Question | Answer
+  ) {
     const requestObject = {
       comment: { ...comment },
     };
     requestObject[`${commenterString}_id`] = commenter.id;
     return this.http.post(`${this.apiUrl}/api/v1/comments.json`, requestObject);
+  }
+
+  updateComment(comment: Comment) {
+    return this.http.patch(
+      `${this.apiUrl}/api/v1/comments/${comment.id}.json`,
+      comment
+    );
   }
 }

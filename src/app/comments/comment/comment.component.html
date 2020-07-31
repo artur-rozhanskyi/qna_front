@@ -1,2 +1,20 @@
 <hr />
-<p>{{comment.body}}</p>
+<div class="row">
+  <div class="col-md-9 d-flex align-items-center">
+    <p class="comment">{{ comment.body }}</p>
+  </div>
+  <app-manage-button
+    *appUserRole="[Role.User, Role.Admin]; owner: comment.userId"
+    class="col-md-3"
+    [isStoreDispatch]="false"
+    (isOpen)="onShowEditChange($event)"
+  ></app-manage-button>
+  <div class="col">
+    <app-comment-new
+      [comment]="comment"
+      [isEdit]="true"
+      [isFormOpen]="isEditOpen"
+      (closeEvent)="onShowEditChange($event)"
+    ></app-comment-new>
+  </div>
+</div>
