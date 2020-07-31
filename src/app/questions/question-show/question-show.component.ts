@@ -23,7 +23,12 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
   isOwner = false;
   Role = Role;
   isAuth: boolean;
+  isNewCommentOpen = false;
   commenter = 'question';
+
+  onAddComment(isOpen: boolean) {
+    this.isNewCommentOpen = isOpen;
+  }
 
   private workWithArray(arr: Array<Comment | Answer>, message: any) {
     switch (message.action) {

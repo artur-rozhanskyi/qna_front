@@ -84,4 +84,10 @@ export class ApiService {
       comment
     );
   }
+
+  deleteComment(comment: Comment) {
+    return this.http.delete(
+      `${this.apiUrl}/api/v1/comments/${comment.id}.json`
+    );
+  }
 }

@@ -16,21 +16,22 @@ export class CommentNewComponent implements OnInit {
   @Input() comment: Comment;
   @Input() isEdit = false;
   @Input() isFormOpen = false;
-  @Output() closeEvent = new EventEmitter<boolean>();
+  @Output() openEvent = new EventEmitter<boolean>();
   commentForm = this.fb.group({ body: ['', Validators.required] });
 
   onAddComment() {
-    this.closeEvent.emit(false);
-    this.commentForm.markAsUntouched();
+    this.openEvent.emit(true);
   }
 
   onBack() {
-    this.onAddComment();
+    this.openEvent.emit(false);
+    this.commentForm.markAsUntouched();
   }
 
   onSubmitSuccess() {
-    this.closeEvent.emit(false);
+    this.openEvent.emit(false);
     this.commentForm.patchValue({ body: '' });
+    this.commentForm.markAsUntouched();
   }
 
   onSubmit() {

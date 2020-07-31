@@ -46,6 +46,8 @@
       *ngIf="isAuth"
       [commenter]="commenter"
       [commenterObject]="questionShow"
+      [isFormOpen]="isNewCommentOpen"
+      (openEvent)="onAddComment($event)"
     ></app-comment-new>
   </div>
   <div class="col-2 mt-3">

@@ -27,6 +27,8 @@
       *ngIf="isAuth"
       [commenter]="commenter"
       [commenterObject]="answer"
+      [isFormOpen]="isNewCommentOpen"
+      (openEvent)="onAddComment($event)"
     ></app-comment-new>
   </div>
 </div>

@@ -14,6 +14,7 @@ export class AnswerComponent implements OnInit {
   @Input() answer: Answer;
   Role = Role;
   isEditOpen = false;
+  isNewCommentOpen = false;
   commenter = 'answer';
   onDelete = () => {
     this.api.deleteAnswer(this.answer).subscribe();
@@ -22,6 +23,10 @@ export class AnswerComponent implements OnInit {
 
   onEditOpen(isOpen: boolean) {
     this.isEditOpen = isOpen;
+  }
+
+  onAddComment(isOpen: boolean) {
+    this.isNewCommentOpen = isOpen;
   }
 
   constructor(
