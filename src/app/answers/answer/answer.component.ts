@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Answer } from '../answer.interface';
 import { Role } from '../../shared/role';
 import { ApiService } from 'src/app/api.service';
+import * as fromApp from '../../store/app.reducers';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-answer',
@@ -11,7 +13,10 @@ import { ApiService } from 'src/app/api.service';
 export class AnswerComponent implements OnInit {
   @Input() answer: Answer;
   Role = Role;
+  isAuth = false;
   isEditOpen = false;
+  isNewCommentOpen = false;
+  commenter = 'answer';
   onDelete = () => {
     this.api.deleteAnswer(this.answer).subscribe();
   }
@@ -20,7 +25,18 @@ export class AnswerComponent implements OnInit {
     this.isEditOpen = isOpen;
   }
 
-  constructor(private api: ApiService) {}
+  onAddComment(isOpen: boolean) {
+    this.isNewCommentOpen = isOpen;
+  }
 
-  ngOnInit(): void {}
+  constructor(
+    private api: ApiService,
+    private store: Store<fromApp.AppState>
+  ) {}
+
+  ngOnInit(): void {
+    this.store
+      .pipe(select('auth'))
+      .subscribe((authState) => (this.isAuth = authState.authenticated));
+  }
 }

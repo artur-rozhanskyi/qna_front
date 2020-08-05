@@ -8,7 +8,6 @@ export class AnswerSocketService extends ChannelService {
 
   setQuestion(question: Question) {
     this.channel = this.updateChannel(question);
-    this.isSubscribed = false;
   }
 
   get answer$() {
@@ -17,7 +16,6 @@ export class AnswerSocketService extends ChannelService {
 
   updateChannel(subject: any) {
     return {
-      command: 'subscribe',
       identifier: `{"channel": "${this.channelName}", "question_id": ${subject.id} }`,
     };
   }

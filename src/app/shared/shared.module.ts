@@ -20,13 +20,13 @@ import { QuestionNavigateComponent } from './question-navigate/question-navigate
   imports: [CommonModule, RouterModule],
   exports: [
     CommonModule,
-    DropdownDirective,
     FormsModule,
     ReactiveFormsModule,
     ManageButtonComponent,
     SpinerComponent,
-    RoleDirective,
     QuestionNavigateComponent,
+    RoleDirective,
+    DropdownDirective,
   ],
 })
 export class SharedModule {}

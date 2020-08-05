@@ -18,7 +18,7 @@ export class WebSocketService {
     return this.wsSubject.asObservable();
   }
 
-  public subscribeToChannel(channel = {}) {
+  public sendToSocket(channel = {}) {
     this.ws.next(channel);
   }
 

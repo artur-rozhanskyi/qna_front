@@ -16,12 +16,19 @@
         ></app-manage-button>
       </div>
     </div>
-    <hr />
     <app-answer-new
       *ngIf="isEditOpen"
       [isEdit]="true"
       [answer]="answer"
       (isOpen)="onEditOpen($event)"
     ></app-answer-new>
+    <app-comments [comments]="answer.comments"></app-comments>
+    <app-comment-new
+      *ngIf="isAuth"
+      [commenter]="commenter"
+      [commenterObject]="answer"
+      [isFormOpen]="isNewCommentOpen"
+      (openEvent)="onAddComment($event)"
+    ></app-comment-new>
   </div>
 </div>
