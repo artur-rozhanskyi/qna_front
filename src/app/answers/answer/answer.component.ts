@@ -13,13 +13,13 @@ import { Store, select } from '@ngrx/store';
 export class AnswerComponent implements OnInit {
   @Input() answer: Answer;
   Role = Role;
+  isAuth = false;
   isEditOpen = false;
   isNewCommentOpen = false;
   commenter = 'answer';
   onDelete = () => {
     this.api.deleteAnswer(this.answer).subscribe();
-  };
-  isAuth = false;
+  }
 
   onEditOpen(isOpen: boolean) {
     this.isEditOpen = isOpen;

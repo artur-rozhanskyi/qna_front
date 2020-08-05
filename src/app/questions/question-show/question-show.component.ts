@@ -68,6 +68,8 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
     });
 
     this.aSocket.setQuestion(this.questionShow);
+    this.aSocket.resubscribe();
+    this.cSocket.resubscribe();
     this.aSocket.answer$.subscribe(
       (message: { answer: Answer; action: string }) => {
         this.workWithArray(this.questionShow.answers, {
@@ -104,7 +106,7 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.aSocket.unsubscribe(this.questionShow);
+    this.aSocket.unsubscribe();
     this.cSocket.unsubscribe();
   }
 }

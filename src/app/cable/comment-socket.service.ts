@@ -5,7 +5,6 @@ import { ChannelService } from './channel.service';
 export class CommentSocketService extends ChannelService {
   channelName = 'CommentsChannel';
   channel = {
-    command: 'subscribe',
     identifier: `{"channel": "${this.channelName}" }`,
   };
 

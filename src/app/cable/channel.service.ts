@@ -3,41 +3,74 @@ import { WebSocketService } from './websocket.service';
 import { tap, map, filter } from 'rxjs/operators';
 import camelcaseKeys from 'camelcase-keys';
 
+enum State {
+  Subscribed,
+  Unsubscribed,
+  StandBy,
+  Await,
+}
+
+enum ChannelResponse {
+  ConfirmSubscription = 'confirm_subscription',
+  Ping = 'ping',
+}
+
+enum ChannelCommand {
+  Subscribe = 'subscribe',
+  Unsubscribe = 'unsubscribe'
+}
+
 @Injectable()
 export class ChannelService {
-  protected isSubscribed = false;
   protected channel: any;
-  protected channelName = '';
+  protected channelName: string;
+  private state: State;
 
   constructor(protected wsService: WebSocketService) {}
 
   protected get subject$() {
     return this.wsService.subject$.pipe(
       tap(() => {
-        if (!this.isSubscribed) {
-          this.wsService.subscribeToChannel(this.channel);
-          this.isSubscribed = !this.isSubscribed;
+        if (this.state === State.StandBy) {
+          this.channel = { ...this.channel, command: ChannelCommand.Subscribe };
+          this.wsService.sendToSocket(this.channel);
+          this.state = State.Await;
+        }
+      }),
+      tap((response) => {
+        if (
+          response.type === ChannelResponse.ConfirmSubscription &&
+          this.checkChannelName(response.identifier)
+        ) {
+          this.state = State.Subscribed;
         }
       }),
       filter(
         (response) =>
-          this.isSubscribed &&
+          this.state === State.Subscribed &&
           response.identifier &&
           response.message &&
-          JSON.parse(response.identifier).channel === this.channelName
+          this.checkChannelName(response.identifier)
       ),
       map((response) => camelcaseKeys(response.message, { deep: true }))
     );
   }
 
-  updateChannel(subject?: any) {
+  resubscribe() {
+    this.state = State.StandBy;
   }
 
-  unsubscribe(subject?: any) {
-    if (subject) {
-      this.channel = this.updateChannel(subject);
+  updateChannel(subject?: any) {}
+
+  unsubscribe() {
+    if (this.state === State.Subscribed) {
+      this.channel = { ...this.channel, command: ChannelCommand.Unsubscribe };
+      this.wsService.sendToSocket(this.channel);
+      this.state = State.Unsubscribed;
     }
-    this.channel = { ...this.channel, command: 'unsubscribe' };
-    this.isSubscribed = false;
+  }
+
+  private checkChannelName(identifier: string) {
+    return JSON.parse(identifier).channel === this.channelName;
   }
 }

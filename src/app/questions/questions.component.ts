@@ -25,6 +25,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.qSocket.resubscribe();
     this.qSocket.question$.subscribe();
     this.store.dispatch(QuestionActions.fetchQuestions());
     this.store.pipe(select('questions')).subscribe((questionState) => {
