@@ -8,6 +8,7 @@ export const environment = {
   wsUrl: 'ws://localhost:3000/cable',
   tokenName: 'token',
   resetPasswordToken: 'resetPasswordToken',
+  attachmentMaxCount: 10,
 };
 
 /*

@@ -15,17 +15,28 @@ export class AnswerNewComponent implements OnInit {
   @Input() isEdit = false;
   @Output() isOpen = new EventEmitter<boolean>();
   answerForm = this.fb.group({ body: ['', [Validators.required]] });
+  files: {};
   question: Question;
 
   onSubmit() {
     if (this.answerForm.valid) {
       if (this.isEdit) {
         this.api
-          .updateAnswer({ ...this.answer, ...this.answerForm.value })
+          .updateAnswer({
+            id: this.answer.id,
+            body: this.answer.body,
+            ...this.answerForm.value,
+            attachmentsAttributes: this.files,
+          } as Answer)
           .subscribe();
         this.onBack();
       } else {
-        this.api.createAnswer(this.question, this.answerForm.value).subscribe();
+        this.api
+          .createAnswer(this.question, {
+            ...this.answerForm.value,
+            attachmentsAttributes: this.files,
+          })
+          .subscribe();
         this.answerForm.patchValue({ body: '' });
       }
       this.answerForm.markAsUntouched();
@@ -42,6 +53,10 @@ export class AnswerNewComponent implements OnInit {
 
   private getControl(name: string): any {
     return this.answerForm.get(name);
+  }
+
+  onAddAttachment(files) {
+    this.files = files;
   }
 
   constructor(

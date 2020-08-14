@@ -15,6 +15,9 @@
           (isOpen)="onEditOpen($event)"
         ></app-manage-button>
       </div>
+      <div class="col">
+        <app-attachments [attachments]="answer.attachments"></app-attachments>
+      </div>
     </div>
     <app-answer-new
       *ngIf="isEditOpen"
