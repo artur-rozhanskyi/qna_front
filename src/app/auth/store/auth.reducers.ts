@@ -84,6 +84,10 @@ const authReducer$ = createReducer(
     ...state,
     resetPassword: true,
   })),
+  on(AuthActions.setProfile, (state, payload) => ({
+    ...state,
+    user: { ...state.user, profile: payload.profile },
+  })),
   on(AuthActions.setUser, (state, payload) => ({
     ...state,
     user: payload.user,

@@ -1,0 +1,18 @@
+<div class="row mt-3">
+  <div class="col">
+    <label for="fileInput" class="avatar">
+      <span class="avatar-edit"></span>
+      <img [src]="getUrl()" class="avatar-img" />
+    </label>
+    <input
+      id="fileInput"
+      (change)="onSelectFile($event)"
+      type="file"
+    />
+  </div>
+
+  <div class="col-8">
+    <p *ngIf="errorMessage">{{errorMessage}}</p>
+    <router-outlet *ngIf="user"></router-outlet>
+  </div>
+</div>

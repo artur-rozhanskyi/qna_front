@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import * as fromApp from '../../store/app.reducers';
 import * as AuthActions from '../../auth/store/auth.actions';
+import { User } from 'src/app/shared/user.model';
 
 @Component({
   selector: 'app-header',
@@ -11,19 +12,20 @@ import * as AuthActions from '../../auth/store/auth.actions';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  menu = [{ link: 'questions', name: 'questions' }];
+  menu: { link: string; name: string }[] = [
+    { link: 'questions', name: 'questions' },
+  ];
   isAuthenticated: boolean;
   isLoading: boolean;
+  user: User;
 
-  constructor(
-    private store: Store<fromApp.AppState>,
-    private router: Router,
-  ) {}
+  constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.store.pipe(select('auth')).subscribe((authState) => {
       this.isAuthenticated = authState.authenticated;
       this.isLoading = authState.loading;
+      this.user = authState.user;
     });
   }
 
@@ -37,5 +39,9 @@ export class HeaderComponent implements OnInit {
 
   signUp() {
     this.router.navigate(['/auth', 'registration']);
+  }
+
+  onProfile() {
+    this.router.navigate(['/users', this.user.id]);
   }
 }

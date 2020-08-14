@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+
 import { Question } from './questions/question.model';
 import { environment } from '../environments/environment';
 import { Answer } from './answers/answer.interface';
 import { Comment } from './comments/comment.model';
+import { Profile } from './shared/profile.model';
+import { User } from './shared/user.model';
+import * as AuthActions from './auth/store/auth.actions';
+import * as fromApp from './store/app.reducers';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +17,10 @@ import { Comment } from './comments/comment.model';
 export class ApiService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store<fromApp.AppState>
+  ) {}
 
   getQuestions() {
     return this.http.get<Question[]>(`${this.apiUrl}/api/v1/questions.json`);
@@ -21,6 +30,10 @@ export class ApiService {
     return this.http.get<Question>(
       `${this.apiUrl}/api/v1/questions/${id}.json`
     );
+  }
+
+  getUser(id: string) {
+    return this.http.get<User>(`${this.apiUrl}/api/v1/users/${id}.json`);
   }
 
   createQuestion(questionForm: Question) {
