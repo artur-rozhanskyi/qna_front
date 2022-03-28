@@ -2,12 +2,14 @@
   <a href="#" class="navbar-brand ml-4">QnA</a>
   <ul class="navbar-nav mr-auto">
     <li class="nav-item" *ngFor="let item of menu" routerLinkActive="active">
-      <a class="nav-link" [routerLink]="item.link"> {{ item.name | uppercase }}</a>
+      <a class="nav-link" [routerLink]="item.link">
+        {{ item.name | uppercase }}</a
+      >
     </li>
   </ul>
 
   <nav class="navbar">
-    <div *ngIf="!isLoading; else loading">
+    <div *ngIf="!isLoading || (isLoading && isAuthenticated); else loading">
       <ul class="navbar-nav mr-4">
         <li class="nav-item" *ngIf="!isAuthenticated">
           <a class="nav-link" (click)="login()">Login</a>
@@ -15,8 +17,22 @@
         <li class="nav-item" *ngIf="!isAuthenticated">
           <a class="nav-link" (click)="signUp()">Sign Up</a>
         </li>
-        <li class="nav-item" *ngIf="isAuthenticated">
-          <a class="nav-link" (click)="logout()">Logout</a>
+        <li *ngIf="isAuthenticated">
+          <div class="dropdown" appDropdown>
+            <img
+              class="dropdown-toggle profile-icon"
+              src="/assets/profiles/no-profile-photo.png"
+            />
+            <div class="dropdown-menu">
+              <button class="dropdown-item" (click)="onProfile()">
+                Profile
+              </button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item text-danger" (click)="logout()">
+                Logout
+              </button>
+            </div>
+          </div>
         </li>
       </ul>
     </div>

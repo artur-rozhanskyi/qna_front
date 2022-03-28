@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -9,6 +9,8 @@ import {
   tap,
   switchMap,
   withLatestFrom,
+  finalize,
+  mergeMap,
 } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
@@ -16,6 +18,7 @@ import * as AuthActions from '../store/auth.actions';
 import * as fromApp from '../../store/app.reducers';
 import { environment } from '../../../environments/environment';
 import { Store, select } from '@ngrx/store';
+import { Location } from '@angular/common';
 
 @Injectable()
 export class AuthEffects {
@@ -137,6 +140,21 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  updateProfile$ = createEffect(() => {
+    let userId: number;
+    return this.actions$.pipe(
+      ofType(AuthActions.updateProfile),
+      tap((action) => (userId = action.user.id)),
+      exhaustMap((action) =>
+        this.authService
+          .updateProfile(action.user, action.profileParams)
+          .pipe(switchMap((profile) => of(AuthActions.setProfile({ profile }))))
+      ),
+      tap(() => this.router.navigate(['/users', userId]))
+      // catchError(this.handleError)
+    );
+  });
+
   private handleError(errorRes: HttpErrorResponse) {
     const {
       errors: { ...errors },
@@ -170,6 +188,8 @@ export class AuthEffects {
     private authService: AuthService,
     private actions$: Actions,
     private router: Router,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private route: ActivatedRoute,
+    private location: Location
   ) {}
 }

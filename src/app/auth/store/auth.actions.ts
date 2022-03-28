@@ -3,6 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { Token } from 'src/app/shared/token.interface';
 import { User } from 'src/app/shared/user.model';
 import { AuthParams } from 'src/app/shared/auth.interface';
+import { Profile } from 'src/app/shared/profile.model';
 
 export const AUTH_CLEAR = '[Auth] Auth Clear';
 export const AUTH_FAIL = '[Auth] Auth Fail';
@@ -21,6 +22,8 @@ export const RESET_PASSWORD_FAIL = '[Auth] Reset Password Fail';
 export const SET_TOKEN = '[Auth] Set Token';
 export const SET_USER = '[Auth] Set User';
 export const SIGN_UP_START = '[Auth] Sign Up Start';
+export const UPDATE_PROFILE = '[Auth] Update Profile';
+export const SET_PROFILE = '[Auth] Set Profile';
 
 export const authClear = createAction(AUTH_CLEAR);
 export const authFail = createAction(AUTH_FAIL, props<{ error: string }>());
@@ -50,4 +53,9 @@ export const setUser = createAction(SET_USER, props<{ user: User }>());
 export const signUpStart = createAction(
   SIGN_UP_START,
   props<{ auth: AuthParams }>()
+);
+export const updateProfile = createAction(UPDATE_PROFILE, props<{user: User, profileParams: Profile}>());
+export const setProfile = createAction(
+  SET_PROFILE,
+  props<{ profile: Profile }>()
 );

@@ -9,6 +9,9 @@ export const environment = {
   tokenName: 'token',
   resetPasswordToken: 'resetPasswordToken',
   attachmentMaxCount: 10,
+  profile: {
+    avatarMissImagePath: 'assets/profiles/no-profile-photo.png'
+  }
 };
 
 /*
