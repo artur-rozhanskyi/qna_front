@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-6 offset-3 mt-3 text-center">
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <h2>Login</h2>
+      <div
+        class="alert alert-danger text-left"
+        role="alert"
+        *ngIf="errorMessage"
+      >
+        {{ errorMessage }}
+      </div>
+      <div class="form-group">
+        <small
+          class="form-text text-danger"
+          *ngIf="email.touched && email.invalid"
+        >
+          Please, provide the correct email
+        </small>
+        <small
+          id="emailHelp"
+          class="form-text text-danger"
+          *ngIf="password.touched && password.invalid"
+        >
+          Please, provide the correct password
+        </small>
+        <input
+          type="email"
+          class="form-control mt-2"
+          [class.is-invalid]="email.touched && email.invalid"
+          placeholder="Enter email"
+          formControlName="email"
+        />
+        <input
+          type="password"
+          class="form-control mt-2"
+          [class.is-invalid]="password.touched && password.invalid"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">
+        Submit
+        <app-spiner *ngIf="isLoading"></app-spiner>
+      </button>
+      <ul class="list-group mt-3">
+        <li class="list-group-item">
+          <a [routerLink]="['forgot-password']">Forgot password?</a>
+        </li>
+      </ul>
+    </form>
+  </div>
+</div>

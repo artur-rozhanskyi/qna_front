@@ -1,0 +1,22 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>First Name</label>
+    <input
+      class="form-control"
+      type="text"
+      placeholder="None"
+      formControlName="firstName"
+    />
+  </div>
+  <div class="form-group">
+    <label>Last Name</label>
+    <input
+      class="form-control"
+      type="text"
+      placeholder="None"
+      formControlName="lastName"
+    />
+  </div>
+  <input class="btn btn-primary" type="submit" value="Update" /> |
+  <button class="btn btn-danger" (click)="onBack()" type="button">Back</button>
+</form>

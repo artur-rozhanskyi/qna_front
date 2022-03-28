@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col">
+    <p>Email: {{ user?.email }}</p>
+    <p>First name: {{ user?.profile?.firstName ? user.profile.firstName : 'None' }}</p>
+    <p>Last name: {{ user?.profile?.lastName ? user.profile.lastName : 'None' }}</p>
+  </div>
+  <div class="col-3" *ngIf="allowEdit">
+    <button class="btn btn-primary" (click)="onEdit()">Edit</button>
+  </div>
+</div>

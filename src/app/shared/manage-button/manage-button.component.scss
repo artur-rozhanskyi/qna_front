@@ -1,0 +1,6 @@
+.dropdown-item {
+  &.delete {
+    color: red;
+  }
+  cursor: pointer;
+}

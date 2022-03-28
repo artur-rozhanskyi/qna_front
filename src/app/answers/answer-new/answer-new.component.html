@@ -1,0 +1,29 @@
+<form [formGroup]="answerForm" class="m-2" (ngSubmit)="onSubmit()">
+  <div class="form-group mb-2">
+    <input
+      class="form-control"
+      [class.is-invalid]="body.invalid && body.touched"
+      type="text"
+      formControlName="body"
+    />
+  </div>
+  <div class="mt-3 mb-3" *ngIf="answer?.attachments">
+    <app-attachments (files)="onAddAttachment($event)" [isEdit]="true" [attachments]="answer.attachments"></app-attachments>
+  </div>
+  <input
+    class="btn btn-primary"
+    type="submit"
+    [value]="isEdit ? 'Update' : 'Submit'"
+  />
+  <ng-container *ngIf="isEdit" #editBackButton>
+    |
+    <button
+      *ngIf="isEdit"
+      class="btn btn-danger"
+      (click)="onBack()"
+      type="button"
+    >
+      Cancel
+    </button>
+  </ng-container>
+</form>

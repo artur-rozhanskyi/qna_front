@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="answer-card card mt-3 col-12">
+    <div class="row">
+      <div class="card-body col-md-9 col-sm-9">
+        <p class="card-text">
+          {{ answer.body }}
+        </p>
+      </div>
+
+      <div class="mt-3 col-md-3 col-sm-3">
+        <app-manage-button
+          *appUserRole="[Role.User, Role.Admin]; owner: answer.userId"
+          [dispachDeleteAction]="onDelete"
+          [isStoreDispatch]="false"
+          (isOpen)="onEditOpen($event)"
+        ></app-manage-button>
+      </div>
+      <div class="col">
+        <app-attachments [attachments]="answer.attachments"></app-attachments>
+      </div>
+    </div>
+    <app-answer-new
+      *ngIf="isEditOpen"
+      [isEdit]="true"
+      [answer]="answer"
+      (isOpen)="onEditOpen($event)"
+    ></app-answer-new>
+    <app-comments [comments]="answer.comments"></app-comments>
+    <app-comment-new
+      *ngIf="isAuth"
+      [commenter]="commenter"
+      [commenterObject]="answer"
+      [isFormOpen]="isNewCommentOpen"
+      (openEvent)="onAddComment($event)"
+    ></app-comment-new>
+  </div>
+</div>

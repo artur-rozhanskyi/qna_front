@@ -1,0 +1,21 @@
+<nav>
+  <button
+    *ngIf="isAuthenticated"
+    type="button"
+    [routerLink]="['/questions/new']"
+    class="btn btn-success"
+  >
+    New
+  </button>
+  <button
+    *ngIf="isAuthenticated && currentRoute != '/questions'"
+    type="button"
+    [routerLink]="['/questions']"
+    class="btn btn-secondary mt-2"
+  >
+    Back
+  </button>
+  <p *ngIf="!isAuthenticated">
+    Please, <a [routerLink]="['/auth']">sign in</a> to create questions
+  </p>
+</nav>
