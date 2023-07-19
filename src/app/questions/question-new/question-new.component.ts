@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
+  UntypedFormBuilder,
   Validators,
   FormArray,
   FormControl,
@@ -76,7 +76,7 @@ export class QuestionNewComponent implements OnInit {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<fromApp.AppState>,
     private activatedRoute: ActivatedRoute,
     private router: Router

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 
 import * as fromApp from '../../store/app.reducers';
@@ -55,7 +55,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<fromApp.AppState>
   ) {}
 
