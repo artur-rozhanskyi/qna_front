@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/api.service';
 import { Answer } from 'src/app/answers/answer.interface';
 import { Question } from 'src/app/questions/question.model';
@@ -60,7 +60,7 @@ export class CommentNewComponent implements OnInit {
     return this.commentForm.get(name);
   }
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {}
+  constructor(private fb: UntypedFormBuilder, private apiService: ApiService) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

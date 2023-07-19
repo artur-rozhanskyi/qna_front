@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Attachment } from '../shared/attachment.model';
 import { environment } from 'src/environments/environment';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { IFile } from '../shared/file.model';
 
 @Component({
@@ -65,7 +65,7 @@ export class AttachmentsComponent implements OnInit {
     );
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {}
 }
