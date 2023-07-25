@@ -60,6 +60,7 @@ export class ChannelService {
     this.state = State.StandBy;
   }
 
+ // eslint-disable-next-line
   updateChannel(subject?: any) {}
 
   unsubscribe() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromApp from '../../store/app.reducers';
@@ -16,6 +16,9 @@ export class ProfileComponent implements OnInit {
   user: User;
   noProfileImagePath = environment.profile.avatarMissImagePath;
   errorMessage: string;
+
+  store = inject(Store<fromApp.AppState>);
+  activatedRoute = inject(ActivatedRoute);
 
   getUrl() {
     return this.user?.profile?.avatar
@@ -52,9 +55,4 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-
-  constructor(
-    private store: Store<fromApp.AppState>,
-    private activatedRoute: ActivatedRoute
-  ) {}
 }

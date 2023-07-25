@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Question } from '../question.model';
 import { Router } from '@angular/router';
 
@@ -7,16 +7,11 @@ import { Router } from '@angular/router';
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent {
   @Input() question: Question;
+  router = inject(Router)
 
   onShowQuestion() {
     this.router.navigate(['/questions', this.question.id]);
   }
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-  }
-
 }

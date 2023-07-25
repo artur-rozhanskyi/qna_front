@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Attachment } from '../shared/attachment.model';
 import { environment } from 'src/environments/environment';
 import { UntypedFormBuilder } from '@angular/forms';
@@ -9,10 +9,11 @@ import { IFile } from '../shared/file.model';
   templateUrl: './attachments.component.html',
   styleUrls: ['./attachments.component.scss'],
 })
-export class AttachmentsComponent implements OnInit {
-  @Output() files = new EventEmitter<{}>();
+export class AttachmentsComponent {
+  @Output() files = new EventEmitter<IFile>();
   @Input() attachments: Attachment[];
   @Input() isEdit = false;
+  fb = inject(UntypedFormBuilder)
   filesInputs = this.fb.array([]);
   filesObject: IFile[] = [];
   attachmentMaxCount: number = environment.attachmentMaxCount;
@@ -64,8 +65,4 @@ export class AttachmentsComponent implements OnInit {
       this.attachmentMaxCount
     );
   }
-
-  constructor(private fb: UntypedFormBuilder) {}
-
-  ngOnInit(): void {}
 }

@@ -5,11 +5,6 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.scss']
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent {
   @Input() comments: Comment[];
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

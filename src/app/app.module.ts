@@ -22,7 +22,6 @@ import { QuestionSocketService } from './cable/question-socket.service.service';
 import { ChannelService } from './cable/channel.service';
 import { AnswerSocketService } from './cable/answer-socket.service';
 import { CommentSocketService } from './cable/comment-socket.service';
-import { ProfileComponent } from './profiles/profile/profile.component';
 
 @NgModule({
   declarations: [AppComponent],

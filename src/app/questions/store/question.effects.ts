@@ -16,7 +16,7 @@ export class QuestionEffects {
       switchMap(() =>
         this.apiService.getQuestions().pipe(
           map((questions) => QuestionActions.setQuestions({ questions })),
-          catchError((errorRes) => {
+          catchError(() => {
             const errorMessage = 'An unknow error occur';
             return of(QuestionActions.loadFail({ errorMessage }));
           })
@@ -108,7 +108,7 @@ export class QuestionEffects {
         };
         const parameters = [];
         for (const prop in errorObj) {
-          if (errorObj.hasOwnProperty(prop)) {
+          if (Object.prototype.hasOwnProperty.call(errorObj, prop)) {
             parameters.push(
               `${capitalize(prop.split('_').join(' '))} ${errorObj[prop]}`
             );

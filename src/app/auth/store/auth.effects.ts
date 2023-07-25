@@ -172,7 +172,7 @@ export class AuthEffects {
         };
         const parameters = [];
         for (const prop in errorObj) {
-          if (errorObj.hasOwnProperty(prop)) {
+          if (Object.prototype.hasOwnProperty.call(errorObj, prop)) {
             parameters.push(
               `${capitalize(prop.split('_').join(' '))} ${errorObj[prop]}`
             );

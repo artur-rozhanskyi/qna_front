@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromApp from '../../store/app.reducers';
 import * as AuthActions from '../../auth/store/auth.actions';
@@ -12,8 +12,12 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./profile-edit.component.scss'],
 })
 export class ProfileEditComponent implements OnInit {
-  user: User;
+  store = inject(Store<fromApp.AppState>)
+  fb = inject(UntypedFormBuilder)
+  router = inject(Router)
+  route = inject(ActivatedRoute)
 
+  user: User;
   profileForm = this.fb.group({ firstName: ['1'], lastName: ['1'] });
 
   onSubmit() {
@@ -33,17 +37,12 @@ export class ProfileEditComponent implements OnInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  constructor(
-    private store: Store<fromApp.AppState>,
-    private fb: UntypedFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
-
   ngOnInit(): void {
     this.store.pipe(select('auth')).subscribe((authState) => {
-      this.profileForm.patchValue({ ...authState.user.profile });
-      this.user = authState.user;
+      if (authState?.user) {
+        this.profileForm.patchValue({ ...authState.user.profile });
+        this.user = authState.user;
+      }
     });
   }
 }

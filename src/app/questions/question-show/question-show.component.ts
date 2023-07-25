@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
@@ -17,6 +17,11 @@ import { CommentSocketService } from '../../cable/comment-socket.service';
   styleUrls: ['./question-show.component.scss'],
 })
 export class QuestionShowComponent implements OnInit, OnDestroy {
+  activatedRoute = inject(ActivatedRoute)
+  store = inject(Store<fromApp.AppState>)
+  aSocket = inject(AnswerSocketService)
+  cSocket = inject(CommentSocketService)
+
   questionShow: Question;
   editLink: Array<string | number>;
   deleteAction;
@@ -51,13 +56,6 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private store: Store<fromApp.AppState>,
-    private aSocket: AnswerSocketService,
-    private cSocket: CommentSocketService
-  ) {}
-
   ngOnInit(): void {
     this.activatedRoute.data.subscribe((data: { question: Question }) => {
       this.questionShow = data.question;
@@ -88,7 +86,7 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
               this.workWithArray(this.questionShow.comments, mapping);
             }
             break;
-          case 'answer':
+          case 'answer': {
             const answer = this.questionShow.answers.find(
               (ans) => ans.id === message.comment.commentableId
             );
@@ -96,6 +94,7 @@ export class QuestionShowComponent implements OnInit, OnDestroy {
               this.workWithArray(answer.comments, mapping);
             }
             break;
+          }
         }
       }
     );

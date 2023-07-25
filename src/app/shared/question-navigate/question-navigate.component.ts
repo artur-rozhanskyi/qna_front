@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import * as fromApp from '../../store/app.reducers';
 import { Store, select } from '@ngrx/store';
 import { Role } from '../role';
@@ -13,7 +13,9 @@ export class QuestionNavigateComponent implements OnInit {
   isAuthenticated = false;
   Role = Role;
   currentRoute: string;
-  constructor(private store: Store<fromApp.AppState>, private router: Router) {}
+  
+  store = inject(Store<fromApp.AppState>)
+  router = inject(Router)
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;

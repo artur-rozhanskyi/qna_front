@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   Validators,
-  FormArray,
-  FormControl,
-  FormGroup,
 } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 
@@ -20,6 +17,11 @@ import { withLatestFrom } from 'rxjs/operators';
   styleUrls: ['./question-new.component.scss'],
 })
 export class QuestionNewComponent implements OnInit {
+  fb = inject(UntypedFormBuilder)
+  store = inject(Store<fromApp.AppState>)
+  activatedRoute = inject(ActivatedRoute)
+  router = inject(Router)
+
   questionNewForm = this.fb.group({
     title: ['', Validators.required],
     body: ['', Validators.required],
@@ -47,20 +49,20 @@ export class QuestionNewComponent implements OnInit {
       this.store.dispatch(
         this.isEdit
           ? QuestionActions.questionUpdate({
-              question: {
-                id: this.question.id,
-                body: this.question.body,
-                title: this.question.title,
-                ...this.questionNewForm.value,
-                attachmentsAttributes: this.files,
-              },
-            })
+            question: {
+              id: this.question.id,
+              body: this.question.body,
+              title: this.question.title,
+              ...this.questionNewForm.value,
+              attachmentsAttributes: this.files,
+            },
+          })
           : QuestionActions.questionCreate({
-              question: {
-                ...this.questionNewForm.value,
-                attachmentsAttributes: this.files,
-              },
-            })
+            question: {
+              ...this.questionNewForm.value,
+              attachmentsAttributes: this.files,
+            },
+          })
       );
     } else {
       this.questionNewForm.markAllAsTouched();
@@ -74,13 +76,6 @@ export class QuestionNewComponent implements OnInit {
   onAddAttachment(files: any) {
     this.files = files;
   }
-
-  constructor(
-    private fb: UntypedFormBuilder,
-    private store: Store<fromApp.AppState>,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.store

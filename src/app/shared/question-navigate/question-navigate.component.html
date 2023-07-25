@@ -8,7 +8,7 @@
     New
   </button>
   <button
-    *ngIf="isAuthenticated && currentRoute != '/questions'"
+    *ngIf="isAuthenticated && currentRoute !== '/questions'"
     type="button"
     [routerLink]="['/questions']"
     class="btn btn-secondary mt-2"

@@ -8,7 +8,6 @@ import { QuestionsComponent } from './questions.component';
 import { QuestionComponent } from './question/question.component';
 import { QuestionRoutingModule } from './question-routing.module';
 import { QuestionShowComponent } from './question-show/question-show.component';
-import { QuestionShowResolver } from './resolvers/question-show.resolver';
 import { SharedModule } from '../shared/shared.module';
 import { QuestionNewComponent } from './question-new/question-new.component';
 import { AnswersModule } from '../answers/answers.module';
@@ -31,6 +30,6 @@ import { AttachmentsModule } from '../attachments/attachments.module';
     StoreModule.forFeature('questions', questionReducer),
     EffectsModule.forFeature([QuestionEffects]),
   ],
-  providers: [QuestionShowResolver],
+  providers: [],
 })
 export class QuestionsModule {}
