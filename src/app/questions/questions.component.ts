@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import * as fromApp from '../store/app.reducers';
@@ -17,12 +17,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   loading = false;
   isAuthenticated = false;
 
-  onClick() {}
-
-  constructor(
-    private store: Store<fromApp.AppState>,
-    private qSocket: QuestionSocketService
-  ) {}
+  store = inject(Store<fromApp.AppState>);
+  qSocket = inject(QuestionSocketService);
 
   ngOnInit(): void {
     this.qSocket.resubscribe();

@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './attachment.component.html',
   styleUrls: ['./attachment.component.scss'],
 })
-export class AttachmentComponent implements OnInit {
+export class AttachmentComponent {
   @Input() attachment: Attachment;
   host = environment.apiUrl;
 
@@ -22,8 +22,4 @@ export class AttachmentComponent implements OnInit {
   getType(): string {
     return this.attachment.contentType.split('/')[0];
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

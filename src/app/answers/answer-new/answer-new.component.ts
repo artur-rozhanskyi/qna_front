@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from 'src/app/questions/question.model';
@@ -14,8 +14,13 @@ export class AnswerNewComponent implements OnInit {
   @Input() answer: Answer;
   @Input() isEdit = false;
   @Output() isOpen = new EventEmitter<boolean>();
+
+  fb = inject(UntypedFormBuilder);
+  route = inject(ActivatedRoute);
+  api = inject(ApiService);
+
   answerForm = this.fb.group({ body: ['', [Validators.required]] });
-  files: {};
+  files: File;
   question: Question;
 
   onSubmit() {
@@ -58,12 +63,6 @@ export class AnswerNewComponent implements OnInit {
   onAddAttachment(files) {
     this.files = files;
   }
-
-  constructor(
-    private fb: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private api: ApiService
-  ) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(

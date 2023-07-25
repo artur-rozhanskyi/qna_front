@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { Answer } from '../answer.interface';
 import { Role } from '../../shared/role';
 import { ApiService } from 'src/app/api.service';
@@ -17,6 +17,10 @@ export class AnswerComponent implements OnInit {
   isEditOpen = false;
   isNewCommentOpen = false;
   commenter = 'answer';
+
+  api = inject(ApiService)
+  authStore = inject(Store<fromApp.AppState>).pipe(select('auth'))
+
   onDelete = () => {
     this.api.deleteAnswer(this.answer).subscribe();
   }
@@ -29,14 +33,7 @@ export class AnswerComponent implements OnInit {
     this.isNewCommentOpen = isOpen;
   }
 
-  constructor(
-    private api: ApiService,
-    private store: Store<fromApp.AppState>
-  ) {}
-
   ngOnInit(): void {
-    this.store
-      .pipe(select('auth'))
-      .subscribe((authState) => (this.isAuth = authState.authenticated));
+    this.authStore.subscribe((authState) => (this.isAuth = authState.authenticated));
   }
 }

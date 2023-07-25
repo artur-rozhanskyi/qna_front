@@ -12,7 +12,6 @@ import camelcaseKeys from 'camelcase-keys';
 
 @Injectable()
 export class CamelCaseResponceInterceptor implements HttpInterceptor {
-  constructor() {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler

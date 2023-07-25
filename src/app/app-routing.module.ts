@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule, inject } from '@angular/core';
+import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { AuthGuard } from './guards/auth.guard';
 import { QuestionsGuard } from './questions/guards/questions.guard';
@@ -28,6 +28,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, {})],
   exports: [RouterModule],
-  providers: [AuthGuard, QuestionsGuard],
+  providers: [],
 })
 export class AppRoutingModule {}

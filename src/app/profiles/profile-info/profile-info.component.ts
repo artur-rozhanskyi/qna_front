@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-
-import * as fromApp from '../../store/app.reducers';
 import { User } from 'src/app/shared/user.model';
 
 @Component({
@@ -14,6 +11,9 @@ export class ProfileInfoComponent implements OnInit {
   user: User;
   allowEdit = true;
 
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+
   onEdit() {
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
@@ -24,6 +24,4 @@ export class ProfileInfoComponent implements OnInit {
       this.allowEdit = allowEdit;
     });
   }
-
-  constructor(private router: Router, private route: ActivatedRoute) {}
 }

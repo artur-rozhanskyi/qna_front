@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/api.service';
 import { Answer } from 'src/app/answers/answer.interface';
@@ -17,6 +17,10 @@ export class CommentNewComponent implements OnInit {
   @Input() isEdit = false;
   @Input() isFormOpen = false;
   @Output() openEvent = new EventEmitter<boolean>();
+
+  fb = inject(UntypedFormBuilder);
+  apiService = inject(ApiService);
+
   commentForm = this.fb.group({ body: ['', Validators.required] });
 
   onAddComment() {
@@ -59,8 +63,6 @@ export class CommentNewComponent implements OnInit {
   private getControl(name: string): any {
     return this.commentForm.get(name);
   }
-
-  constructor(private fb: UntypedFormBuilder, private apiService: ApiService) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

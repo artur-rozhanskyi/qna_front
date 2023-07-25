@@ -21,6 +21,4 @@ export class WebSocketService {
   public sendToSocket(channel = {}) {
     this.ws.next(channel);
   }
-
-  constructor() {}
 }
